@@ -6,8 +6,32 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		C8D7A2141B615022000CF9DE /* Mogenerator */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C8D7A2151B615022000CF9DE /* Build configuration list for PBXAggregateTarget "Mogenerator" */;
+			buildPhases = (
+				C8D7A2181B61502E000CF9DE /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Mogenerator;
+			productName = Mogenerator;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		A965DAFE5A327AE5E674D8D3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B7F9061908B820BB7A6CCB /* libPods.a */; };
+		C8D7A2131B614F41000CF9DE /* AMDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */; };
+		C8D7A2271B615931000CF9DE /* _AMOProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A21C1B615931000CF9DE /* _AMOProduct.m */; };
+		C8D7A2281B615931000CF9DE /* _AMOShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A21E1B615931000CF9DE /* _AMOShoppingList.m */; };
+		C8D7A2291B615931000CF9DE /* _AMOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2201B615931000CF9DE /* _AMOUser.m */; };
+		C8D7A22A1B615931000CF9DE /* AMOProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2221B615931000CF9DE /* AMOProduct.m */; };
+		C8D7A22B1B615931000CF9DE /* AMOShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2241B615931000CF9DE /* AMOShoppingList.m */; };
+		C8D7A22C1B615931000CF9DE /* AMOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2261B615931000CF9DE /* AMOUser.m */; };
+		C8D7A22F1B615B65000CF9DE /* AMDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A22E1B615B65000CF9DE /* AMDataManager.m */; };
+		C8D7A2321B616796000CF9DE /* AMStoreSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2311B616796000CF9DE /* AMStoreSearchView.m */; };
+		C8D7A23B1B617288000CF9DE /* AMProductDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A23A1B617288000CF9DE /* AMProductDetailView.m */; };
 		C8EA96461B5A472D009D1DDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96451B5A472D009D1DDA /* main.m */; };
 		C8EA96491B5A472D009D1DDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96481B5A472D009D1DDA /* AppDelegate.m */; };
 		C8EA96521B5A472D009D1DDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8EA96501B5A472D009D1DDA /* Main.storyboard */; };
@@ -18,7 +42,6 @@
 		C8EA96711B5A93B1009D1DDA /* AMOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96701B5A93B1009D1DDA /* AMOrdersViewController.m */; };
 		C8EA96741B5A93D2009D1DDA /* AMStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96731B5A93D2009D1DDA /* AMStoreViewController.m */; };
 		C8EA96771B5A93F3009D1DDA /* AMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96761B5A93F3009D1DDA /* AMSettingsViewController.m */; };
-		C8EA967A1B5A99C9009D1DDA /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96791B5A99C9009D1DDA /* TableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +57,25 @@
 /* Begin PBXFileReference section */
 		4749A72CDF557C9762A4A6BE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		80B7F9061908B820BB7A6CCB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMDataModel.xcdatamodel; sourceTree = "<group>"; };
+		C8D7A21B1B615931000CF9DE /* _AMOProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _AMOProduct.h; sourceTree = "<group>"; };
+		C8D7A21C1B615931000CF9DE /* _AMOProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AMOProduct.m; sourceTree = "<group>"; };
+		C8D7A21D1B615931000CF9DE /* _AMOShoppingList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _AMOShoppingList.h; sourceTree = "<group>"; };
+		C8D7A21E1B615931000CF9DE /* _AMOShoppingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AMOShoppingList.m; sourceTree = "<group>"; };
+		C8D7A21F1B615931000CF9DE /* _AMOUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _AMOUser.h; sourceTree = "<group>"; };
+		C8D7A2201B615931000CF9DE /* _AMOUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AMOUser.m; sourceTree = "<group>"; };
+		C8D7A2211B615931000CF9DE /* AMOProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOProduct.h; sourceTree = "<group>"; };
+		C8D7A2221B615931000CF9DE /* AMOProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOProduct.m; sourceTree = "<group>"; };
+		C8D7A2231B615931000CF9DE /* AMOShoppingList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOShoppingList.h; sourceTree = "<group>"; };
+		C8D7A2241B615931000CF9DE /* AMOShoppingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOShoppingList.m; sourceTree = "<group>"; };
+		C8D7A2251B615931000CF9DE /* AMOUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOUser.h; sourceTree = "<group>"; };
+		C8D7A2261B615931000CF9DE /* AMOUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOUser.m; sourceTree = "<group>"; };
+		C8D7A22D1B615B65000CF9DE /* AMDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDataManager.h; sourceTree = "<group>"; };
+		C8D7A22E1B615B65000CF9DE /* AMDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDataManager.m; sourceTree = "<group>"; };
+		C8D7A2301B616796000CF9DE /* AMStoreSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMStoreSearchView.h; sourceTree = "<group>"; };
+		C8D7A2311B616796000CF9DE /* AMStoreSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMStoreSearchView.m; sourceTree = "<group>"; };
+		C8D7A2391B617288000CF9DE /* AMProductDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMProductDetailView.h; sourceTree = "<group>"; };
+		C8D7A23A1B617288000CF9DE /* AMProductDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMProductDetailView.m; sourceTree = "<group>"; };
 		C8EA96401B5A472D009D1DDA /* Aislemarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aislemarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8EA96441B5A472D009D1DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8EA96451B5A472D009D1DDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -53,8 +95,6 @@
 		C8EA96731B5A93D2009D1DDA /* AMStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMStoreViewController.m; sourceTree = "<group>"; };
 		C8EA96751B5A93F3009D1DDA /* AMSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSettingsViewController.h; sourceTree = "<group>"; };
 		C8EA96761B5A93F3009D1DDA /* AMSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSettingsViewController.m; sourceTree = "<group>"; };
-		C8EA96781B5A99C9009D1DDA /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
-		C8EA96791B5A99C9009D1DDA /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		E5A71E348C8855E93F35821F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,6 +134,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C8D7A21A1B615931000CF9DE /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				C8D7A21B1B615931000CF9DE /* _AMOProduct.h */,
+				C8D7A21C1B615931000CF9DE /* _AMOProduct.m */,
+				C8D7A21D1B615931000CF9DE /* _AMOShoppingList.h */,
+				C8D7A21E1B615931000CF9DE /* _AMOShoppingList.m */,
+				C8D7A21F1B615931000CF9DE /* _AMOUser.h */,
+				C8D7A2201B615931000CF9DE /* _AMOUser.m */,
+				C8D7A2211B615931000CF9DE /* AMOProduct.h */,
+				C8D7A2221B615931000CF9DE /* AMOProduct.m */,
+				C8D7A2231B615931000CF9DE /* AMOShoppingList.h */,
+				C8D7A2241B615931000CF9DE /* AMOShoppingList.m */,
+				C8D7A2251B615931000CF9DE /* AMOUser.h */,
+				C8D7A2261B615931000CF9DE /* AMOUser.m */,
+			);
+			path = ManagedObjects;
+			sourceTree = "<group>";
+		};
 		C8EA96371B5A472D009D1DDA = {
 			isa = PBXGroup;
 			children = (
@@ -124,14 +183,20 @@
 				C8EA966D1B5A9396009D1DDA /* AMShoppingListViewController.m */,
 				C8EA966F1B5A93B1009D1DDA /* AMOrdersViewController.h */,
 				C8EA96701B5A93B1009D1DDA /* AMOrdersViewController.m */,
-				C8EA96721B5A93D2009D1DDA /* AMStoreViewController.h */,
-				C8EA96731B5A93D2009D1DDA /* AMStoreViewController.m */,
 				C8EA96751B5A93F3009D1DDA /* AMSettingsViewController.h */,
 				C8EA96761B5A93F3009D1DDA /* AMSettingsViewController.m */,
-				C8EA96781B5A99C9009D1DDA /* TableViewController.h */,
-				C8EA96791B5A99C9009D1DDA /* TableViewController.m */,
+				C8EA96721B5A93D2009D1DDA /* AMStoreViewController.h */,
+				C8EA96731B5A93D2009D1DDA /* AMStoreViewController.m */,
+				C8D7A2391B617288000CF9DE /* AMProductDetailView.h */,
+				C8D7A23A1B617288000CF9DE /* AMProductDetailView.m */,
+				C8D7A2301B616796000CF9DE /* AMStoreSearchView.h */,
+				C8D7A2311B616796000CF9DE /* AMStoreSearchView.m */,
+				C8D7A22D1B615B65000CF9DE /* AMDataManager.h */,
+				C8D7A22E1B615B65000CF9DE /* AMDataManager.m */,
 				C8EA96531B5A472D009D1DDA /* Images.xcassets */,
 				C8EA96551B5A472D009D1DDA /* LaunchScreen.xib */,
+				C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */,
+				C8D7A21A1B615931000CF9DE /* ManagedObjects */,
 				C8EA96431B5A472D009D1DDA /* Supporting Files */,
 			);
 			path = Aislemarket;
@@ -212,6 +277,9 @@
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Kyle Zhao";
 				TargetAttributes = {
+					C8D7A2141B615022000CF9DE = {
+						CreatedOnToolsVersion = 6.4;
+					};
 					C8EA963F1B5A472D009D1DDA = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -236,6 +304,7 @@
 			targets = (
 				C8EA963F1B5A472D009D1DDA /* Aislemarket */,
 				C8EA965B1B5A472D009D1DDA /* AislemarketTests */,
+				C8D7A2141B615022000CF9DE /* Mogenerator */,
 			);
 		};
 /* End PBXProject section */
@@ -276,6 +345,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		C8D7A2181B61502E000CF9DE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/mogenerator -m Aislemarket/AMDataModel.xcdatamodeld/AMDataModel.xcdatamodel -O Aislemarket/ManagedObjects --template-var arc=true";
+		};
 		F822BEEE9A2CB685D6818415 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -298,13 +380,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8D7A2291B615931000CF9DE /* _AMOUser.m in Sources */,
+				C8D7A22A1B615931000CF9DE /* AMOProduct.m in Sources */,
 				C8EA96491B5A472D009D1DDA /* AppDelegate.m in Sources */,
+				C8D7A2131B614F41000CF9DE /* AMDataModel.xcdatamodeld in Sources */,
+				C8D7A2271B615931000CF9DE /* _AMOProduct.m in Sources */,
+				C8D7A22B1B615931000CF9DE /* AMOShoppingList.m in Sources */,
+				C8D7A2281B615931000CF9DE /* _AMOShoppingList.m in Sources */,
 				C8EA96461B5A472D009D1DDA /* main.m in Sources */,
 				C8EA966E1B5A9396009D1DDA /* AMShoppingListViewController.m in Sources */,
 				C8EA96771B5A93F3009D1DDA /* AMSettingsViewController.m in Sources */,
+				C8D7A22C1B615931000CF9DE /* AMOUser.m in Sources */,
 				C8EA96741B5A93D2009D1DDA /* AMStoreViewController.m in Sources */,
-				C8EA967A1B5A99C9009D1DDA /* TableViewController.m in Sources */,
 				C8EA96711B5A93B1009D1DDA /* AMOrdersViewController.m in Sources */,
+				C8D7A23B1B617288000CF9DE /* AMProductDetailView.m in Sources */,
+				C8D7A22F1B615B65000CF9DE /* AMDataManager.m in Sources */,
+				C8D7A2321B616796000CF9DE /* AMStoreSearchView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +437,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C8D7A2161B615022000CF9DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C8D7A2171B615022000CF9DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		C8EA96641B5A472D009D1DDA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -485,6 +590,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C8D7A2151B615022000CF9DE /* Build configuration list for PBXAggregateTarget "Mogenerator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C8D7A2161B615022000CF9DE /* Debug */,
+				C8D7A2171B615022000CF9DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C8EA963B1B5A472D009D1DDA /* Build configuration list for PBXProject "Aislemarket" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -513,6 +626,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */,
+			);
+			currentVersion = C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */;
+			path = AMDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C8EA96381B5A472D009D1DDA /* Project object */;
 }

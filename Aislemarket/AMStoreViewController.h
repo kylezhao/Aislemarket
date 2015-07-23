@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-@interface AMStoreViewController : UIViewController
-
+@interface AMStoreViewController : UITableViewController <
+UISearchBarDelegate,
+UISearchResultsUpdating,
+UISearchControllerDelegate,
+NSFetchedResultsControllerDelegate
+>
 @end

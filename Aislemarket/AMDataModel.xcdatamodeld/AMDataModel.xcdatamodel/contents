@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="AMOProduct" representedClassName="AMOProduct" syncable="YES">
+        <attribute name="category" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="price" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="productID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="AMOShoppingList" representedClassName="AMOShoppingList" syncable="YES">
+        <attribute name="date" attributeType="Date" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="products" toMany="YES" deletionRule="No Action" ordered="YES" destinationEntity="AMOProduct" syncable="YES"/>
+    </entity>
+    <entity name="AMOUser" representedClassName="AMOUser" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AMOProduct" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="AMOShoppingList" positionX="-54" positionY="18" width="128" height="90"/>
+        <element name="AMOUser" positionX="-45" positionY="45" width="128" height="90"/>
+    </elements>
+</model>

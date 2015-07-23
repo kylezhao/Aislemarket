@@ -134,52 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sZE-HX-iGN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2014" y="892"/>
-        </scene>
-        <!--Store-->
-        <scene sceneID="Sda-Jb-Vda">
-            <objects>
-                <viewController id="9eB-7e-4U5" customClass="AMStoreViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bvA-mG-Q0b"/>
-                        <viewControllerLayoutGuide type="bottom" id="QNa-0H-dXL"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="42N-71-dNS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="JgB-D6-n6H">
-                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="9eB-7e-4U5" id="Spe-FD-DhM"/>
-                                </connections>
-                            </searchBar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="JgB-D6-n6H" firstAttribute="top" secondItem="bvA-mG-Q0b" secondAttribute="bottom" id="Fmd-MN-9mV"/>
-                            <constraint firstAttribute="trailing" secondItem="JgB-D6-n6H" secondAttribute="trailing" id="dwI-nt-eIs"/>
-                            <constraint firstItem="JgB-D6-n6H" firstAttribute="leading" secondItem="42N-71-dNS" secondAttribute="leading" id="skh-Bi-xwi"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Store" id="rmt-Am-hw5"/>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="E8y-Ab-fgG" id="aIM-oF-7fc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mjb-3g-W1D" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="E8y-Ab-fgG">
-                    <connections>
-                        <outlet property="delegate" destination="9eB-7e-4U5" id="EJV-aJ-eh3"/>
-                        <outlet property="searchBar" destination="JgB-D6-n6H" id="l0a-08-nYw"/>
-                        <outlet property="searchContentsController" destination="9eB-7e-4U5" id="JEM-pu-fKK"/>
-                        <outlet property="searchResultsDataSource" destination="9eB-7e-4U5" id="peq-Vd-dOh"/>
-                        <outlet property="searchResultsDelegate" destination="9eB-7e-4U5" id="Ee0-tw-Rcs"/>
-                    </connections>
-                </searchDisplayController>
-            </objects>
-            <point key="canvasLocation" x="1166" y="892"/>
+            <point key="canvasLocation" x="1166" y="886"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -194,14 +149,52 @@
                     </tabBar>
                     <connections>
                         <segue destination="yvE-eY-bED" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
+                        <segue destination="2Ve-Hg-byc" kind="relationship" relationship="viewControllers" id="S7B-ag-VI4"/>
                         <segue destination="EbS-bC-wsu" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
-                        <segue destination="FkR-rk-XyP" kind="relationship" relationship="viewControllers" id="o5E-Vl-LMT"/>
                         <segue destination="yzk-pL-eNu" kind="relationship" relationship="viewControllers" id="jOT-GP-5PD"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="342" y="558"/>
+        </scene>
+        <!--Store-->
+        <scene sceneID="ugL-bY-5xn">
+            <objects>
+                <tableViewController id="uar-jD-jjP" customClass="AMStoreViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="SDf-r6-Lfp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="uar-jD-jjP" id="G81-IO-GLT"/>
+                            <outlet property="delegate" destination="uar-jD-jjP" id="cIh-l1-Zbz"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Store" id="ZJO-lI-rul"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hiu-8R-f8i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2014" y="886"/>
+        </scene>
+        <!--Product Detail View-->
+        <scene sceneID="bDy-jW-6La">
+            <objects>
+                <viewController storyboardIdentifier="AMProductDetailView" id="BRE-Ku-bTR" customClass="AMProductDetailView" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BlS-O2-Gel"/>
+                        <viewControllerLayoutGuide type="bottom" id="sgm-rV-Ux2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3zv-xp-X3z">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bmq-6U-0fz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2401" y="886"/>
         </scene>
         <!--Lists-->
         <scene sceneID="fvz-Sw-kFr">
@@ -258,26 +251,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AWd-33-8AW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1630" y="892"/>
+            <point key="canvasLocation" x="782" y="886"/>
         </scene>
         <!--Store-->
-        <scene sceneID="c5C-Nq-eEQ">
+        <scene sceneID="0Ez-6C-QFN">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FkR-rk-XyP" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Store" image="cart" id="Z53-6R-gke"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Ve-Hg-byc" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Store" image="cart" id="61r-gL-vGr"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="atZ-VJ-Vcv">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j5v-Sb-xuc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="9eB-7e-4U5" kind="relationship" relationship="rootViewController" id="IE5-86-2gP"/>
+                        <segue destination="uar-jD-jjP" kind="relationship" relationship="rootViewController" id="evh-VK-sno"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EoO-11-eo0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ITR-JF-juY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="782" y="892"/>
+            <point key="canvasLocation" x="1630" y="886"/>
         </scene>
     </scenes>
     <resources>

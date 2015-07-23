@@ -1,0 +1,110 @@
+GET http://104.236.235.254/login?userid=p8zhao%40uwaterloo.ca&password=AMarket123
+
+{
+    "user": {
+        "name": "Kyle Zhao",
+        "email": "p8zhao@uwaterloo.ca",
+        "phone": "5198884567"
+    }
+}
+
+
+// Get one product
+
+GET http://104.236.235.254/products/0001
+{
+    "product": {
+        "name": "Pepsi",
+        "price": "199",
+        "barcode": "0001",
+        "category": "softdrink"
+    }
+}
+
+// Barcode is the primary key of the products table
+// GET requests of the form /products/NNNN always return 1 product
+
+
+
+
+// Get a list of products
+
+// Get requests with parameters ?key1=value1&key2=value2
+// always return an array even if array is size 1 or 0
+
+
+GET http://104.236.235.254/products?category=softdrink
+
+{
+    "products": [
+        {
+            "name": "Pepsi",
+            "price": "199",
+            "barcode": "0001",
+            "category": "softdrink"
+        },
+        {
+            "name": "Sprite",
+            "price": "150",
+            "barcode": "0003",
+            "category": "softdrink"
+        }
+    ]
+}
+
+// Other sample requests but don't worry too much about them right now
+GET http://104.236.235.254/products?category=softdrink&price=199
+GET http://104.236.235.254/products?name=sprite
+
+
+
+
+// One Shopping List
+// A Shopping List has an array of products
+{
+    "shoppinglist": {
+        "products": [
+            {
+                "name": "Pepsi",
+                "price": "199",
+                "barcode": "0001",
+                "category": "softdrink"
+            },
+            {
+                "name": "Doritos",
+                "price": "239",
+                "barcode": "0002",
+                "category": "snacks"
+            }
+        ]
+    }
+}
+
+
+
+
+
+// One Order
+// The format of the date is ISO 8601
+https://en.wikipedia.org/wiki/ISO_8601
+{
+    "order": {
+        "userid": "p8zhao@uwaterloo.ca",
+        "ordertime": "2013-10-21T13:28:06.419Z",
+        "deliverytime": "2013-10-21T13:28:06.419Z",
+        "products": [
+            {
+                "name": "Pepsi",
+                "price": "199",
+                "barcode": "0001",
+                "category": "softdrink"
+            },
+            {
+                "name": "Doritos",
+                "price": "239",
+                "barcode": "0002",
+                "category": "snacks"
+            }
+        ]
+    }
+}
