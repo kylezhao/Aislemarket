@@ -24,7 +24,7 @@ static NSString * const kProductCellID = @"productCell";
     }
     AMOProduct *product = self.filteredProducts[indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.text = product.name;
+    cell.textLabel.text = product.capitalisedName;
     cell.detailTextLabel.text = product.formattedPrice;
     return cell;
 }

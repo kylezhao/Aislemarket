@@ -27,13 +27,12 @@ static NSString * const kProductCellID = @"productCell";
     [super viewDidLoad];
     [self setupSearchBar];
     
-    self.fetchedResultsController = [[AMDataManager sharedManager] productsFRCForDelegate:self];
-    
-    [[AMDataManager sharedManager] loadProducts];
+    self.fetchedResultsController = [AMDataManager.sharedManager productsFRCForDelegate:self];
+    [AMDataManager.sharedManager loadProducts];
     
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSLog(@"Products fetchedResultsController failed %@, %@", error, [error userInfo]);
     }
 }
 
@@ -101,10 +100,9 @@ static NSString * const kProductCellID = @"productCell";
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     AMOProduct *product = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = product.name;
+    cell.textLabel.text = product.capitalisedName;
     cell.detailTextLabel.text = product.formattedPrice;
 }
-
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
@@ -131,7 +129,6 @@ static NSString * const kProductCellID = @"productCell";
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
 }
-
 
 #pragma mark - UISearchControllerDelegate
 

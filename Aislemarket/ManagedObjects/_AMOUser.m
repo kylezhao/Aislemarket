@@ -4,9 +4,9 @@
 #import "_AMOUser.h"
 
 const struct AMOUserAttributes AMOUserAttributes = {
+	.email = @"email",
 	.name = @"name",
 	.phone = @"phone",
-	.userid = @"userid",
 };
 
 @implementation AMOUserID
@@ -44,29 +44,29 @@ const struct AMOUserAttributes AMOUserAttributes = {
 	return keyPaths;
 }
 
+@dynamic email;
+
 @dynamic name;
 
 @dynamic phone;
 
-- (int16_t)phoneValue {
+- (int64_t)phoneValue {
 	NSNumber *result = [self phone];
-	return [result shortValue];
+	return [result longLongValue];
 }
 
-- (void)setPhoneValue:(int16_t)value_ {
-	[self setPhone:[NSNumber numberWithShort:value_]];
+- (void)setPhoneValue:(int64_t)value_ {
+	[self setPhone:[NSNumber numberWithLongLong:value_]];
 }
 
-- (int16_t)primitivePhoneValue {
+- (int64_t)primitivePhoneValue {
 	NSNumber *result = [self primitivePhone];
-	return [result shortValue];
+	return [result longLongValue];
 }
 
-- (void)setPrimitivePhoneValue:(int16_t)value_ {
-	[self setPrimitivePhone:[NSNumber numberWithShort:value_]];
+- (void)setPrimitivePhoneValue:(int64_t)value_ {
+	[self setPrimitivePhone:[NSNumber numberWithLongLong:value_]];
 }
-
-@dynamic userid;
 
 @end
 

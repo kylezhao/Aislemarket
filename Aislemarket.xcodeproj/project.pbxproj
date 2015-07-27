@@ -22,6 +22,8 @@
 
 /* Begin PBXBuildFile section */
 		A965DAFE5A327AE5E674D8D3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B7F9061908B820BB7A6CCB /* libPods.a */; };
+		C81DF3A11B644CE100DCA844 /* _AMOOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = C81DF39E1B644CE100DCA844 /* _AMOOrder.m */; };
+		C81DF3A21B644CE100DCA844 /* AMOOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = C81DF3A01B644CE100DCA844 /* AMOOrder.m */; };
 		C8D7A2131B614F41000CF9DE /* AMDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */; };
 		C8D7A2271B615931000CF9DE /* _AMOProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A21C1B615931000CF9DE /* _AMOProduct.m */; };
 		C8D7A2281B615931000CF9DE /* _AMOShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A21E1B615931000CF9DE /* _AMOShoppingList.m */; };
@@ -32,13 +34,14 @@
 		C8D7A22F1B615B65000CF9DE /* AMDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A22E1B615B65000CF9DE /* AMDataManager.m */; };
 		C8D7A2321B616796000CF9DE /* AMStoreSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2311B616796000CF9DE /* AMStoreSearchView.m */; };
 		C8D7A23B1B617288000CF9DE /* AMProductDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A23A1B617288000CF9DE /* AMProductDetailView.m */; };
+		C8D9CD701B65516700F4D00E /* AMLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D9CD6F1B65516700F4D00E /* AMLoginView.m */; };
+		C8D9CD731B661A8C00F4D00E /* AMShoppingListView.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D9CD721B661A8C00F4D00E /* AMShoppingListView.m */; };
 		C8EA96461B5A472D009D1DDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96451B5A472D009D1DDA /* main.m */; };
 		C8EA96491B5A472D009D1DDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96481B5A472D009D1DDA /* AppDelegate.m */; };
 		C8EA96521B5A472D009D1DDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8EA96501B5A472D009D1DDA /* Main.storyboard */; };
 		C8EA96541B5A472D009D1DDA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8EA96531B5A472D009D1DDA /* Images.xcassets */; };
 		C8EA96571B5A472D009D1DDA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EA96551B5A472D009D1DDA /* LaunchScreen.xib */; };
 		C8EA96631B5A472D009D1DDA /* AislemarketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96621B5A472D009D1DDA /* AislemarketTests.m */; };
-		C8EA966E1B5A9396009D1DDA /* AMShoppingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA966D1B5A9396009D1DDA /* AMShoppingListViewController.m */; };
 		C8EA96711B5A93B1009D1DDA /* AMOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96701B5A93B1009D1DDA /* AMOrdersViewController.m */; };
 		C8EA96741B5A93D2009D1DDA /* AMStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96731B5A93D2009D1DDA /* AMStoreViewController.m */; };
 		C8EA96771B5A93F3009D1DDA /* AMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96761B5A93F3009D1DDA /* AMSettingsViewController.m */; };
@@ -57,6 +60,10 @@
 /* Begin PBXFileReference section */
 		4749A72CDF557C9762A4A6BE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		80B7F9061908B820BB7A6CCB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C81DF39D1B644CE100DCA844 /* _AMOOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _AMOOrder.h; sourceTree = "<group>"; };
+		C81DF39E1B644CE100DCA844 /* _AMOOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AMOOrder.m; sourceTree = "<group>"; };
+		C81DF39F1B644CE100DCA844 /* AMOOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOOrder.h; sourceTree = "<group>"; };
+		C81DF3A01B644CE100DCA844 /* AMOOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOOrder.m; sourceTree = "<group>"; };
 		C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMDataModel.xcdatamodel; sourceTree = "<group>"; };
 		C8D7A21B1B615931000CF9DE /* _AMOProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _AMOProduct.h; sourceTree = "<group>"; };
 		C8D7A21C1B615931000CF9DE /* _AMOProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AMOProduct.m; sourceTree = "<group>"; };
@@ -76,6 +83,10 @@
 		C8D7A2311B616796000CF9DE /* AMStoreSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMStoreSearchView.m; sourceTree = "<group>"; };
 		C8D7A2391B617288000CF9DE /* AMProductDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMProductDetailView.h; sourceTree = "<group>"; };
 		C8D7A23A1B617288000CF9DE /* AMProductDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMProductDetailView.m; sourceTree = "<group>"; };
+		C8D9CD6E1B65516700F4D00E /* AMLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLoginView.h; sourceTree = "<group>"; };
+		C8D9CD6F1B65516700F4D00E /* AMLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMLoginView.m; sourceTree = "<group>"; };
+		C8D9CD711B661A8C00F4D00E /* AMShoppingListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMShoppingListView.h; sourceTree = "<group>"; };
+		C8D9CD721B661A8C00F4D00E /* AMShoppingListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMShoppingListView.m; sourceTree = "<group>"; };
 		C8EA96401B5A472D009D1DDA /* Aislemarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aislemarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8EA96441B5A472D009D1DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8EA96451B5A472D009D1DDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -87,8 +98,6 @@
 		C8EA965C1B5A472D009D1DDA /* AislemarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AislemarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8EA96611B5A472D009D1DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8EA96621B5A472D009D1DDA /* AislemarketTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AislemarketTests.m; sourceTree = "<group>"; };
-		C8EA966C1B5A9396009D1DDA /* AMShoppingListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMShoppingListViewController.h; sourceTree = "<group>"; };
-		C8EA966D1B5A9396009D1DDA /* AMShoppingListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMShoppingListViewController.m; sourceTree = "<group>"; };
 		C8EA966F1B5A93B1009D1DDA /* AMOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOrdersViewController.h; sourceTree = "<group>"; };
 		C8EA96701B5A93B1009D1DDA /* AMOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOrdersViewController.m; sourceTree = "<group>"; };
 		C8EA96721B5A93D2009D1DDA /* AMStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMStoreViewController.h; sourceTree = "<group>"; };
@@ -137,18 +146,22 @@
 		C8D7A21A1B615931000CF9DE /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				C8D7A21B1B615931000CF9DE /* _AMOProduct.h */,
-				C8D7A21C1B615931000CF9DE /* _AMOProduct.m */,
-				C8D7A21D1B615931000CF9DE /* _AMOShoppingList.h */,
-				C8D7A21E1B615931000CF9DE /* _AMOShoppingList.m */,
-				C8D7A21F1B615931000CF9DE /* _AMOUser.h */,
-				C8D7A2201B615931000CF9DE /* _AMOUser.m */,
+				C8D7A2251B615931000CF9DE /* AMOUser.h */,
+				C8D7A2261B615931000CF9DE /* AMOUser.m */,
+				C81DF39F1B644CE100DCA844 /* AMOOrder.h */,
+				C81DF3A01B644CE100DCA844 /* AMOOrder.m */,
 				C8D7A2211B615931000CF9DE /* AMOProduct.h */,
 				C8D7A2221B615931000CF9DE /* AMOProduct.m */,
 				C8D7A2231B615931000CF9DE /* AMOShoppingList.h */,
 				C8D7A2241B615931000CF9DE /* AMOShoppingList.m */,
-				C8D7A2251B615931000CF9DE /* AMOUser.h */,
-				C8D7A2261B615931000CF9DE /* AMOUser.m */,
+				C8D7A21F1B615931000CF9DE /* _AMOUser.h */,
+				C8D7A2201B615931000CF9DE /* _AMOUser.m */,
+				C81DF39D1B644CE100DCA844 /* _AMOOrder.h */,
+				C81DF39E1B644CE100DCA844 /* _AMOOrder.m */,
+				C8D7A21B1B615931000CF9DE /* _AMOProduct.h */,
+				C8D7A21C1B615931000CF9DE /* _AMOProduct.m */,
+				C8D7A21D1B615931000CF9DE /* _AMOShoppingList.h */,
+				C8D7A21E1B615931000CF9DE /* _AMOShoppingList.m */,
 			);
 			path = ManagedObjects;
 			sourceTree = "<group>";
@@ -179,8 +192,10 @@
 				C8EA96471B5A472D009D1DDA /* AppDelegate.h */,
 				C8EA96481B5A472D009D1DDA /* AppDelegate.m */,
 				C8EA96501B5A472D009D1DDA /* Main.storyboard */,
-				C8EA966C1B5A9396009D1DDA /* AMShoppingListViewController.h */,
-				C8EA966D1B5A9396009D1DDA /* AMShoppingListViewController.m */,
+				C8D9CD6E1B65516700F4D00E /* AMLoginView.h */,
+				C8D9CD6F1B65516700F4D00E /* AMLoginView.m */,
+				C8D9CD711B661A8C00F4D00E /* AMShoppingListView.h */,
+				C8D9CD721B661A8C00F4D00E /* AMShoppingListView.m */,
 				C8EA966F1B5A93B1009D1DDA /* AMOrdersViewController.h */,
 				C8EA96701B5A93B1009D1DDA /* AMOrdersViewController.m */,
 				C8EA96751B5A93F3009D1DDA /* AMSettingsViewController.h */,
@@ -388,14 +403,17 @@
 				C8D7A22B1B615931000CF9DE /* AMOShoppingList.m in Sources */,
 				C8D7A2281B615931000CF9DE /* _AMOShoppingList.m in Sources */,
 				C8EA96461B5A472D009D1DDA /* main.m in Sources */,
-				C8EA966E1B5A9396009D1DDA /* AMShoppingListViewController.m in Sources */,
 				C8EA96771B5A93F3009D1DDA /* AMSettingsViewController.m in Sources */,
+				C8D9CD731B661A8C00F4D00E /* AMShoppingListView.m in Sources */,
 				C8D7A22C1B615931000CF9DE /* AMOUser.m in Sources */,
 				C8EA96741B5A93D2009D1DDA /* AMStoreViewController.m in Sources */,
+				C81DF3A21B644CE100DCA844 /* AMOOrder.m in Sources */,
 				C8EA96711B5A93B1009D1DDA /* AMOrdersViewController.m in Sources */,
+				C8D9CD701B65516700F4D00E /* AMLoginView.m in Sources */,
 				C8D7A23B1B617288000CF9DE /* AMProductDetailView.m in Sources */,
 				C8D7A22F1B615B65000CF9DE /* AMDataManager.m in Sources */,
 				C8D7A2321B616796000CF9DE /* AMStoreSearchView.m in Sources */,
+				C81DF3A11B644CE100DCA844 /* _AMOOrder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +615,7 @@
 				C8D7A2171B615022000CF9DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C8EA963B1B5A472D009D1DDA /* Build configuration list for PBXProject "Aislemarket" */ = {
 			isa = XCConfigurationList;

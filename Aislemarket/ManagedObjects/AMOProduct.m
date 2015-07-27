@@ -9,11 +9,14 @@
 @implementation AMOProduct
 
 - (NSString *)formattedPrice {
-//    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-//    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-//    NSString *priceString = [numberFormatter stringFromNumber:@(((float)self.priceValue)/100)];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    NSString *priceString = [numberFormatter stringFromNumber:self.price];
+    return priceString;
+}
 
-    return @"$2.98";
+- (NSString *)capitalisedName {
+    return [self.name capitalizedString];
 }
 
 @end

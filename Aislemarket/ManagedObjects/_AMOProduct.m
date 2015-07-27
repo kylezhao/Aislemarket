@@ -10,6 +10,11 @@ const struct AMOProductAttributes AMOProductAttributes = {
 	.productID = @"productID",
 };
 
+const struct AMOProductRelationships AMOProductRelationships = {
+	.orders = @"orders",
+	.shopplingLists = @"shopplingLists",
+};
+
 @implementation AMOProductID
 @end
 
@@ -56,22 +61,22 @@ const struct AMOProductAttributes AMOProductAttributes = {
 
 @dynamic price;
 
-- (int16_t)priceValue {
+- (float)priceValue {
 	NSNumber *result = [self price];
-	return [result shortValue];
+	return [result floatValue];
 }
 
-- (void)setPriceValue:(int16_t)value_ {
-	[self setPrice:[NSNumber numberWithShort:value_]];
+- (void)setPriceValue:(float)value_ {
+	[self setPrice:[NSNumber numberWithFloat:value_]];
 }
 
-- (int16_t)primitivePriceValue {
+- (float)primitivePriceValue {
 	NSNumber *result = [self primitivePrice];
-	return [result shortValue];
+	return [result floatValue];
 }
 
-- (void)setPrimitivePriceValue:(int16_t)value_ {
-	[self setPrimitivePrice:[NSNumber numberWithShort:value_]];
+- (void)setPrimitivePriceValue:(float)value_ {
+	[self setPrimitivePrice:[NSNumber numberWithFloat:value_]];
 }
 
 @dynamic productID;
@@ -92,6 +97,28 @@ const struct AMOProductAttributes AMOProductAttributes = {
 
 - (void)setPrimitiveProductIDValue:(int16_t)value_ {
 	[self setPrimitiveProductID:[NSNumber numberWithShort:value_]];
+}
+
+@dynamic orders;
+
+- (NSMutableSet*)ordersSet {
+	[self willAccessValueForKey:@"orders"];
+
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"orders"];
+
+	[self didAccessValueForKey:@"orders"];
+	return result;
+}
+
+@dynamic shopplingLists;
+
+- (NSMutableSet*)shopplingListsSet {
+	[self willAccessValueForKey:@"shopplingLists"];
+
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"shopplingLists"];
+
+	[self didAccessValueForKey:@"shopplingLists"];
+	return result;
 }
 
 @end

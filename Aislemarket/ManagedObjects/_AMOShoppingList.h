@@ -4,8 +4,11 @@
 #import <CoreData/CoreData.h>
 
 extern const struct AMOShoppingListAttributes {
-	__unsafe_unretained NSString *date;
+	__unsafe_unretained NSString *autogenerate;
 	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *productIDs;
+	__unsafe_unretained NSString *shoppingListID;
+	__unsafe_unretained NSString *time;
 } AMOShoppingListAttributes;
 
 extern const struct AMOShoppingListRelationships {
@@ -13,6 +16,8 @@ extern const struct AMOShoppingListRelationships {
 } AMOShoppingListRelationships;
 
 @class AMOProduct;
+
+@class NSObject;
 
 @interface AMOShoppingListID : NSManagedObjectID {}
 @end
@@ -23,44 +28,65 @@ extern const struct AMOShoppingListRelationships {
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 @property (nonatomic, readonly, strong) AMOShoppingListID* objectID;
 
-@property (nonatomic, strong) NSDate* date;
+@property (nonatomic, strong) NSNumber* autogenerate;
 
-//- (BOOL)validateDate:(id*)value_ error:(NSError**)error_;
+@property (atomic) BOOL autogenerateValue;
+- (BOOL)autogenerateValue;
+- (void)setAutogenerateValue:(BOOL)value_;
+
+//- (BOOL)validateAutogenerate:(id*)value_ error:(NSError**)error_;
 
 @property (nonatomic, strong) NSString* name;
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
-@property (nonatomic, strong) NSOrderedSet *products;
+@property (nonatomic, strong) id productIDs;
 
-- (NSMutableOrderedSet*)productsSet;
+//- (BOOL)validateProductIDs:(id*)value_ error:(NSError**)error_;
+
+@property (nonatomic, strong) NSString* shoppingListID;
+
+//- (BOOL)validateShoppingListID:(id*)value_ error:(NSError**)error_;
+
+@property (nonatomic, strong) NSDate* time;
+
+//- (BOOL)validateTime:(id*)value_ error:(NSError**)error_;
+
+@property (nonatomic, strong) NSSet *products;
+
+- (NSMutableSet*)productsSet;
 
 @end
 
 @interface _AMOShoppingList (ProductsCoreDataGeneratedAccessors)
-- (void)addProducts:(NSOrderedSet*)value_;
-- (void)removeProducts:(NSOrderedSet*)value_;
+- (void)addProducts:(NSSet*)value_;
+- (void)removeProducts:(NSSet*)value_;
 - (void)addProductsObject:(AMOProduct*)value_;
 - (void)removeProductsObject:(AMOProduct*)value_;
-
-- (void)insertObject:(AMOProduct*)value inProductsAtIndex:(NSUInteger)idx;
-- (void)removeObjectFromProductsAtIndex:(NSUInteger)idx;
-- (void)insertProducts:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
-- (void)removeProductsAtIndexes:(NSIndexSet *)indexes;
-- (void)replaceObjectInProductsAtIndex:(NSUInteger)idx withObject:(AMOProduct*)value;
-- (void)replaceProductsAtIndexes:(NSIndexSet *)indexes withProducts:(NSArray *)values;
 
 @end
 
 @interface _AMOShoppingList (CoreDataGeneratedPrimitiveAccessors)
 
-- (NSDate*)primitiveDate;
-- (void)setPrimitiveDate:(NSDate*)value;
+- (NSNumber*)primitiveAutogenerate;
+- (void)setPrimitiveAutogenerate:(NSNumber*)value;
+
+- (BOOL)primitiveAutogenerateValue;
+- (void)setPrimitiveAutogenerateValue:(BOOL)value_;
 
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
-- (NSMutableOrderedSet*)primitiveProducts;
-- (void)setPrimitiveProducts:(NSMutableOrderedSet*)value;
+- (id)primitiveProductIDs;
+- (void)setPrimitiveProductIDs:(id)value;
+
+- (NSString*)primitiveShoppingListID;
+- (void)setPrimitiveShoppingListID:(NSString*)value;
+
+- (NSDate*)primitiveTime;
+- (void)setPrimitiveTime:(NSDate*)value;
+
+- (NSMutableSet*)primitiveProducts;
+- (void)setPrimitiveProducts:(NSMutableSet*)value;
 
 @end

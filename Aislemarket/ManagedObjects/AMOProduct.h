@@ -3,4 +3,5 @@
 @interface AMOProduct : _AMOProduct {}
 // Custom logic goes here.
 - (NSString *)formattedPrice;
+- (NSString *)capitalisedName;
 @end

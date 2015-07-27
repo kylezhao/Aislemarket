@@ -3,7 +3,7 @@ GET http://104.236.235.254/login?userid=p8zhao%40uwaterloo.ca&password=AMarket12
 {
     "user": {
         "name": "Kyle Zhao",
-        "email": "p8zhao@uwaterloo.ca",
+        "userid": "p8zhao@uwaterloo.ca",
         "phone": "5198884567"
     }
 }
@@ -14,7 +14,7 @@ GET http://104.236.235.254/login?userid=p8zhao%40uwaterloo.ca&password=AMarket12
 GET http://104.236.235.254/products/0001
 {
     "product": {
-        "name": "Pepsi",
+        "brand": "Pepsi",
         "price": "199",
         "barcode": "0001",
         "category": "softdrink"
@@ -23,8 +23,6 @@ GET http://104.236.235.254/products/0001
 
 // Barcode is the primary key of the products table
 // GET requests of the form /products/NNNN always return 1 product
-
-
 
 
 // Get a list of products
@@ -63,48 +61,30 @@ GET http://104.236.235.254/products?name=sprite
 // A Shopping List has an array of products
 {
     "shoppinglist": {
-        "products": [
-            {
-                "name": "Pepsi",
-                "price": "199",
-                "barcode": "0001",
-                "category": "softdrink"
-            },
-            {
-                "name": "Doritos",
-                "price": "239",
-                "barcode": "0002",
-                "category": "snacks"
-            }
-        ]
+        "time":"2015-05-28T15:22:00.000-04:00",
+        "products": [2,5,10,9]
     }
 }
 
+//POST
 
-
-
+{
+    "shoppinglist": {
+        "user":"p8zhao@uwaterloo.ca",
+        "id": 1,
+        "time": "2015-07-24T05:25:00.000-04:00",
+        "products": [1,2,3]
+    }
+}
 
 // One Order
 // The format of the date is ISO 8601
 https://en.wikipedia.org/wiki/ISO_8601
 {
     "order": {
-        "userid": "p8zhao@uwaterloo.ca",
-        "ordertime": "2013-10-21T13:28:06.419Z",
-        "deliverytime": "2013-10-21T13:28:06.419Z",
-        "products": [
-            {
-                "name": "Pepsi",
-                "price": "199",
-                "barcode": "0001",
-                "category": "softdrink"
-            },
-            {
-                "name": "Doritos",
-                "price": "239",
-                "barcode": "0002",
-                "category": "snacks"
-            }
-        ]
+        "email":"p8zhao@uwaterloo.ca",
+        "ordertime":"2015-05-28T15:22:00.000-04:00",
+        "deliverytime":"2015-05-28T15:22:00.000-04:00",
+        "products": [2,5,10,9]
     }
 }
