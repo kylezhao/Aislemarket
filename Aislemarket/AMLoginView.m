@@ -18,10 +18,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-#ifdef DEBUG
-    self.emailField.text=@"p8zhao@uwaterloo.ca";
-    self.passwordField.text=@"AMarket123";
-#endif
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:4.0f/255.0f
+                                                                           green:191.0f/255.0f
+                                                                            blue:143.0f/255.0f
+                                                                           alpha:1.0];
+    
+//#ifdef DEBUG
+//    self.emailField.text=@"p8zhao@uwaterloo.ca";
+//    self.passwordField.text=@"AMarket123";
+//#endif
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,4 +66,7 @@
     }
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 @end

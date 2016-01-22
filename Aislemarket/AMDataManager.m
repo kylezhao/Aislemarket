@@ -160,7 +160,8 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     [_managedObjectStore createPersistentStoreCoordinator];
     
     NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"AMPersistentData.sqlite"];
-    [self tempDeleteStore:storePath];
+    // Delete Core Data for testing
+    //[self tempDeleteStore:storePath];
     
     NSError *error;
     NSPersistentStore *persistentStore = [_managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil
@@ -269,6 +270,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                                    statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 }
 
+// Clear Core Data
 - (void)tempDeleteStore:(NSString *)storePath {
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
