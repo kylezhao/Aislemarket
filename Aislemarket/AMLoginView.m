@@ -57,9 +57,17 @@
                 UITabBarController *tabController = (UITabBarController*)[storyboard instantiateViewControllerWithIdentifier:@"tabViewController"];
                 [self showDetailViewController:tabController sender:self];
             } else {
-                [[[UIAlertView alloc] initWithTitle:@"Invalid Credentials"
-                                            message:@"Please check your Email and Password are correct"
-                                           delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Credentials"
+                                                                               message:@"Please check your Email and Password are correct"
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
+
+                UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * _Nonnull action) {
+                    [alert dismissViewControllerAnimated:YES completion:nil];
+                }];
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
                 
             }
         }];

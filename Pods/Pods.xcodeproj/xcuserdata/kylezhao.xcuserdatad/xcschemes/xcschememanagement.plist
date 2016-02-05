@@ -9,11 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>BlocksKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>ISO8601DateFormatterValueTransformer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,22 +42,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>5FDF078CB395359C539E62D6C6751505</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>911599C44C08F4F1BA6A518770D7C651</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9B7079F8CCCA4FEC05E36BFF7B8F0BC4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9BCB8586126F0F36874362E7B9C114C9</key>
+		<key>87043E5CBFD40FFE0A063AC3D2615D37</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,12 +52,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E992F41245C6B52C18F5471D7E5E2613</key>
+		<key>CB5A2DBB963EC720865A9A0E40014A8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D83E20F4C7E6009572E093A0903E83EC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>EC92052871CD688C7F882C8727380C2A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F25B73824537A8371C3F3230FA9ABC59</key>
 		<dict>
 			<key>primary</key>
 			<true/>
