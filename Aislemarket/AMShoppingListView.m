@@ -13,7 +13,7 @@
 static NSString * const kShoppingListCellID = @"shoppingListCell";
 
 @interface AMShoppingListView ()
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @end
 
 @implementation AMShoppingListView

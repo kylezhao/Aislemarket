@@ -23,6 +23,7 @@
 - (void)loadOrders;
 - (void)loadProducts;
 - (void)loadShopplingLists;
+- (void)clearCoreData;
 
 @end
 /*

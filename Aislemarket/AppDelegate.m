@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "AMDataManager.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
+    NSString *storyboardId = AMDataManager.sharedManager.currentUser? @"tabViewController" : @"loginViewController";
+    self.window.rootViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:storyboardId];
+
     return YES;
 }
 

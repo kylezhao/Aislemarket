@@ -16,7 +16,7 @@
 static NSString * const kProductCellID = @"productCell";
 
 @interface AMStoreViewController ()
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) AMStoreSearchView *searchResultsView;
 @property (nonatomic, strong) UISearchController *searchController;
 @end

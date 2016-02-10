@@ -11,7 +11,8 @@
 - (NSString *)formattedPrice {
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    NSString *priceString = [numberFormatter stringFromNumber:self.price];
+    // self.price is integer of cents
+    NSString *priceString = [numberFormatter stringFromNumber:@(self.price.floatValue/100)];
     return priceString;
 }
 

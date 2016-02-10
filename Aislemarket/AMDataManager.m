@@ -24,10 +24,10 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
 //http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/orders/
 //http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/shoppinglists/
 //http://104.236.229.162:8080/simple-service-webapp/webapi/users/login?userid=p8zhao%40uwaterloo.ca&password=AMarket123
-//http://104.236.229.162:8080/simple-service-webapp/webapi/users/login?userid=p8zhao@uwatelroo.ca&password=AMarket123
 
 @implementation AMDataManager {
     RKManagedObjectStore *_managedObjectStore;
+    NSString *_persistantStorePath;
 }
 
 + (AMDataManager *)sharedManager {
@@ -42,6 +42,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
 - (id)init {
     if (self = [super init]) {
         [self setupRestkitWithCoreData];
+        [self loadCurrentUser];
     }
     return self;
 }
@@ -89,6 +90,14 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                 handler(NO,&error);
                                             }];
+}
+- (void)loadCurrentUser {
+    // Try fetching the current user if the user exists
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"AMOUser"
+                                                         inManagedObjectContext:self.managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    self.currentUser = [[self.managedObjectContext executeFetchRequest:request error:nil] firstObject];
 }
 - (void)loadOrders {
     if (!self.currentUser) {assert(0);}
@@ -159,12 +168,12 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     
     [_managedObjectStore createPersistentStoreCoordinator];
     
-    NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"AMPersistentData.sqlite"];
+    _persistantStorePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"AMPersistentData.sqlite"];
     // Delete Core Data for testing
-    //[self tempDeleteStore:storePath];
+    //[self clearCoreData];
     
     NSError *error;
-    NSPersistentStore *persistentStore = [_managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil
+    NSPersistentStore *persistentStore = [_managedObjectStore addSQLitePersistentStoreAtPath:_persistantStorePath fromSeedDatabaseAtPath:nil
                                                                            withConfiguration:nil options:nil error:&error];
     
     NSAssert(persistentStore, @"Failed to add persistent store with error: %@", error);
@@ -182,6 +191,17 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     [objectManager addResponseDescriptorsFromArray:@[RDProduct, RDUser]];
     
     RKObjectManager.sharedManager = objectManager;
+}
+
+- (void)clearCoreData {
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL success = [fileManager removeItemAtPath:_persistantStorePath error:&error];
+    if (success) {
+        NSLog(@"Deleted file %@ ",_persistantStorePath);
+    } else {
+        NSLog(@"Could not delete file %@ ",[error localizedDescription]);
+    }
 }
 
 #pragma mark - RKEntityMapping Factory Helpers
@@ -270,17 +290,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                                    statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 }
 
-// Clear Core Data
-- (void)tempDeleteStore:(NSString *)storePath {
-    NSError *error;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL success = [fileManager removeItemAtPath:storePath error:&error];
-    if (success) {
-        NSLog(@"Deleted file %@ ",storePath);
-    } else {
-        NSLog(@"Could not delete file %@ ",[error localizedDescription]);
-    }
-}
+
 
 @end
 

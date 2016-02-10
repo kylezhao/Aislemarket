@@ -23,11 +23,10 @@
                                                                            green:191.0f/255.0f
                                                                             blue:143.0f/255.0f
                                                                            alpha:1.0];
-    
-//#ifdef DEBUG
-//    self.emailField.text=@"p8zhao@uwaterloo.ca";
-//    self.passwordField.text=@"AMarket123";
-//#endif
+#ifdef DEBUG
+    self.emailField.text=@"p8zhao@uwaterloo.ca";
+    self.passwordField.text=@"AMarket123";
+#endif
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,16 +45,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section) {
+    if (indexPath.section == 1) {
         NSLog(@"Login: %@ : %@ ",self.emailField.text,self.passwordField.text);
         
         [AMDataManager.sharedManager loginUsername:self.emailField.text
                                           password:self.passwordField.text
                                            handler:^(BOOL succsess, NSError *__autoreleasing *error) {
             if (succsess) {
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                UITabBarController *tabController = (UITabBarController*)[storyboard instantiateViewControllerWithIdentifier:@"tabViewController"];
-                [self showDetailViewController:tabController sender:self];
+                UIWindow *window = UIApplication.sharedApplication.delegate.window;
+                window.rootViewController =
+                [window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"tabViewController"];
             } else {
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Credentials"
                                                                                message:@"Please check your Email and Password are correct"
