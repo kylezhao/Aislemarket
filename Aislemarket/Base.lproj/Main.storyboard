@@ -48,7 +48,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7126" y="1574"/>
+            <point key="canvasLocation" x="6278" y="1574"/>
         </scene>
         <!--Settings-->
         <scene sceneID="kjj-8c-t9C">
@@ -462,6 +462,9 @@
                                         <constraint firstAttribute="centerY" secondItem="IYc-yT-cDy" secondAttribute="centerY" constant="-11" id="nHB-uL-ayN"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="CDw-d6-bD0" kind="show" identifier="shoppingListDetail" id="whz-Vm-uQg"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -473,7 +476,27 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zPH-tY-ZEl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6278" y="1574"/>
+            <point key="canvasLocation" x="7126" y="1574"/>
+        </scene>
+        <!--Shopping List Detail View-->
+        <scene sceneID="gs1-WW-bDY">
+            <objects>
+                <tableViewController id="CDw-d6-bD0" customClass="AMShoppingListDetailView" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="u3x-2Y-Fck">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="CDw-d6-bD0" id="NrJ-Ef-ht5"/>
+                            <outlet property="delegate" destination="CDw-d6-bD0" id="MJY-mM-feK"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l7i-tl-JW7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7513" y="1574"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -644,7 +667,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aWi-IG-J5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6742" y="1574"/>
+            <point key="canvasLocation" x="5894" y="1574"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Bxf-fU-afA">
@@ -720,7 +743,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LmJ-pm-7dA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5894" y="1574"/>
+            <point key="canvasLocation" x="6742" y="1574"/>
         </scene>
     </scenes>
     <resources>
@@ -729,4 +752,5 @@
         <image name="list" width="25" height="25"/>
         <image name="truck" width="25" height="16"/>
     </resources>
+    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

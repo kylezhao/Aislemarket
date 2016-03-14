@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AMOShoppingList.h"
 
 @interface AMShoppingListDetailView : UITableViewController
+
+@property (nonatomic, strong) AMOShoppingList *shoppingList;
 
 @end

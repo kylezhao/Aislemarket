@@ -10,6 +10,8 @@
 
 @import CoreData;
 @class AMOUser;
+@class AMOProduct;
+@class AMOShoppingList;
 
 @interface AMDataManager : NSObject
 
@@ -22,7 +24,9 @@
 - (void)loginUsername:(NSString *)username password:(NSString *)password handler:(void (^)(BOOL succsess, NSError **error))handler;
 - (void)loadOrders;
 - (void)loadProducts;
-- (void)loadShopplingLists;
+- (void)loadShopplingListsHandler:(void (^)(BOOL succsess, NSError **error))handler;
+- (void)satisfactionRequest:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL succsess, NSError **error))handler;
+- (void)updateShoppingList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL succsess, NSError **error))handler;
 - (void)clearCoreData;
 
 @end

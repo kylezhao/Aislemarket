@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Xcode 4.3">
     <entity name="AMOOrder" representedClassName="AMOOrder" syncable="YES">
         <attribute name="deliveryTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="orderID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -21,7 +21,7 @@
         <attribute name="productIDs" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="shoppingListID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" attributeType="Date" syncable="YES"/>
-        <relationship name="products" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AMOProduct" inverseName="shopplingLists" inverseEntity="AMOProduct" syncable="YES"/>
+        <relationship name="products" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="AMOProduct" inverseName="shopplingLists" inverseEntity="AMOProduct" syncable="YES"/>
     </entity>
     <entity name="AMOUser" representedClassName="AMOUser" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,9 +29,9 @@
         <attribute name="phone" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AMOOrder" positionX="261" positionY="-342" width="128" height="120"/>
+        <element name="AMOOrder" positionX="360" positionY="-219" width="128" height="120"/>
         <element name="AMOProduct" positionX="133" positionY="-222" width="128" height="135"/>
-        <element name="AMOShoppingList" positionX="-2" positionY="-342" width="128" height="135"/>
+        <element name="AMOShoppingList" positionX="-65" positionY="-216" width="128" height="28"/>
         <element name="AMOUser" positionX="133" positionY="-439" width="128" height="30"/>
     </elements>
 </model>

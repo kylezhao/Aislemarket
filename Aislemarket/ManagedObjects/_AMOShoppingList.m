@@ -80,14 +80,74 @@ const struct AMOShoppingListRelationships AMOShoppingListRelationships = {
 
 @dynamic products;
 
-- (NSMutableSet*)productsSet {
+- (NSMutableOrderedSet*)productsSet {
 	[self willAccessValueForKey:@"products"];
 
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"products"];
+	NSMutableOrderedSet *result = (NSMutableOrderedSet*)[self mutableOrderedSetValueForKey:@"products"];
 
 	[self didAccessValueForKey:@"products"];
 	return result;
 }
 
+@end
+
+@implementation _AMOShoppingList (ProductsCoreDataGeneratedAccessors)
+- (void)addProducts:(NSOrderedSet*)value_ {
+	[self.productsSet unionOrderedSet:value_];
+}
+- (void)removeProducts:(NSOrderedSet*)value_ {
+	[self.productsSet minusOrderedSet:value_];
+}
+- (void)addProductsObject:(AMOProduct*)value_ {
+	[self.productsSet addObject:value_];
+}
+- (void)removeProductsObject:(AMOProduct*)value_ {
+	[self.productsSet removeObject:value_];
+}
+- (void)insertObject:(AMOProduct*)value inProductsAtIndex:(NSUInteger)idx {
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"products"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self products]];
+    [tmpOrderedSet insertObject:value atIndex:idx];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"products"];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"products"];
+}
+- (void)removeObjectFromProductsAtIndex:(NSUInteger)idx {
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"products"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self products]];
+    [tmpOrderedSet removeObjectAtIndex:idx];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"products"];
+    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"products"];
+}
+- (void)insertProducts:(NSArray *)value atIndexes:(NSIndexSet *)indexes {
+    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"products"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self products]];
+    [tmpOrderedSet insertObjects:value atIndexes:indexes];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"products"];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"products"];
+}
+- (void)removeProductsAtIndexes:(NSIndexSet *)indexes {
+    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"products"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self products]];
+    [tmpOrderedSet removeObjectsAtIndexes:indexes];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"products"];
+    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"products"];
+}
+- (void)replaceObjectInProductsAtIndex:(NSUInteger)idx withObject:(AMOProduct*)value {
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"products"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self products]];
+    [tmpOrderedSet replaceObjectAtIndex:idx withObject:value];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"products"];
+    [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"products"];
+}
+- (void)replaceProductsAtIndexes:(NSIndexSet *)indexes withProducts:(NSArray *)value {
+    [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"products"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self products]];
+    [tmpOrderedSet replaceObjectsAtIndexes:indexes withObjects:value];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"products"];
+    [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"products"];
+}
 @end
 

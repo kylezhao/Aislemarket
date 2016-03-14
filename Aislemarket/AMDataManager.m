@@ -17,17 +17,23 @@ static NSString * const kRestEndpointURL = @"http://104.236.229.162:8080";
 static NSString * const kBasePath =        @"/simple-service-webapp/webapi/";
 static NSString * const kOrdersPath =      @"orders/";
 static NSString * const kShoppingListsPath=@"shoppinglists/";
+static NSString * const kSatisfactionPath= @"satisfaction/";
 static NSString * const kProductsPath =    @"/simple-service-webapp/webapi/products/";
 static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users/login";
 
 //http://104.236.229.162:8080/simple-service-webapp/webapi/products/
 //http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/orders/
 //http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/shoppinglists/
+//http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/shoppinglists/update/
+//http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/satisfaction/
+//http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/inventory/
 //http://104.236.229.162:8080/simple-service-webapp/webapi/users/login?userid=p8zhao%40uwaterloo.ca&password=AMarket123
 
 @implementation AMDataManager {
     RKManagedObjectStore *_managedObjectStore;
     NSString *_persistantStorePath;
+    BOOL _addedOdersDescriptor;
+    BOOL _addedShoppingListDescriptor;
 }
 
 + (AMDataManager *)sharedManager {
@@ -41,6 +47,8 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
 
 - (id)init {
     if (self = [super init]) {
+        _addedOdersDescriptor = NO;
+        _addedShoppingListDescriptor = NO;
         [self setupRestkitWithCoreData];
         [self loadCurrentUser];
     }
@@ -48,11 +56,11 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
 }
 
 - (NSFetchedResultsController *)productsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate {
-    
+
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"AMOProduct"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     fetchRequest.sortDescriptors = @[descriptor];
-    
+
     // Setup fetched results
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:RKManagedObjectStore.defaultStore.mainQueueManagedObjectContext
@@ -66,7 +74,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     NSSortDescriptor *descriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"autogenerate" ascending:YES];
     NSSortDescriptor *descriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     fetchRequest.sortDescriptors = @[descriptor1,descriptor2];
-    
+
     // Setup fetched results
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:RKManagedObjectStore.defaultStore.mainQueueManagedObjectContext
@@ -101,10 +109,13 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
 }
 - (void)loadOrders {
     if (!self.currentUser) {assert(0);}
-    
-    RKResponseDescriptor *RDOrders = [self responseDescriptorOrder:self.mappingOrder];
-    [RKObjectManager.sharedManager addResponseDescriptor:RDOrders];
-    
+
+    if (!_addedOdersDescriptor) {
+        RKResponseDescriptor *RDOrders = [self responseDescriptorOrder:self.mappingOrder];
+        [RKObjectManager.sharedManager addResponseDescriptor:RDOrders];
+        _addedOdersDescriptor = YES;
+    }
+
     [RKObjectManager.sharedManager getObjectsAtPath:self.ordersPathFromCurrentUser
                                          parameters:nil
                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -122,19 +133,81 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                                 RKLogError(@"Load products failed: %@", error);
                                             }];
 }
-- (void)loadShopplingLists {
+- (void)loadShopplingListsHandler:(void (^)(BOOL succsess, NSError **error))handler {
     if (!self.currentUser) {assert(0);}
-    
-    RKResponseDescriptor *RDShoppingList = [self responseDescriptorShoppingList:self.mappingShoppingList];
-    [RKObjectManager.sharedManager addResponseDescriptor:RDShoppingList];
-    
+
+    if (!_addedShoppingListDescriptor) {
+        RKResponseDescriptor *RDShoppingList = [self responseDescriptorShoppingList:self.mappingShoppingList];
+        [RKObjectManager.sharedManager addResponseDescriptor:RDShoppingList];
+        _addedShoppingListDescriptor = YES;
+    }
+
     [RKObjectManager.sharedManager getObjectsAtPath:self.shoppingListsPathFromCurrentUser
                                          parameters:nil
                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                 RKLogInfo(@"Loaded Shopping Lists:%@",mappingResult.dictionary);
+                                                if(handler){
+                                                    handler(YES,nil);
+                                                }
                                             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                 RKLogError(@"Load ShoppingLists failed: %@", error);
+                                                if(handler){
+                                                    handler(NO,nil);
+                                                }
                                             }];
+}
+- (void)satisfactionRequest:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL succsess, NSError **error))handler {
+
+    NSDictionary * requestData = @{
+                                   @"product_id":product.productID,
+                                   @"approve":sat?@"true":@"false"
+                                   };
+
+    NSMutableURLRequest *request = [NSMutableURLRequest
+                                    requestWithURL:[NSURL URLWithString:self.satisfactionPathFromCurrentUser]];
+
+    NSError *error;
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPMethod:@"PUT"];
+    [request setHTTPBody:postData];
+
+
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        NSLog(@"requestReply: %@", requestReply);
+    }] resume];
+}
+
+- (void)updateShoppingList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL succsess, NSError **error))handler {
+
+    NSMutableArray *productIDs = [[NSMutableArray alloc] init];
+
+    for (AMOProduct *product in shoppingList.products) {
+        [productIDs addObject:product.productID];
+    }
+
+    NSDictionary * requestData = @{
+                                   @"id":shoppingList.shoppingListID,
+                                   @"products":productIDs
+                                   };
+
+    NSMutableURLRequest *request = [NSMutableURLRequest
+                                    requestWithURL:[NSURL URLWithString:self.updateShoppingListPathFromCurrentUser]];
+
+    NSError *error;
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPMethod:@"PUT"];
+    [request setHTTPBody:postData];
+
+
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        NSLog(@"requestReply: %@", requestReply);
+    }] resume];
 }
 
 - (NSString *)ordersPathFromCurrentUser {
@@ -153,43 +226,59 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     }
 }
 
+- (NSString *)satisfactionPathFromCurrentUser {
+    if(self.currentUser) {
+        return [[NSString alloc] initWithFormat:@"%@%@%@/%@",kRestEndpointURL,kBasePath,self.currentUser.email,kSatisfactionPath];
+    } else {
+        assert(0);
+    }
+}
+
+- (NSString *)updateShoppingListPathFromCurrentUser {
+    if(self.currentUser) {
+        return [[NSString alloc] initWithFormat:@"%@%@%@/%@update/",kRestEndpointURL,kBasePath,self.currentUser.email,kShoppingListsPath];
+    } else {
+        assert(0);
+    }
+}
+
 - (void)setupRestkitWithCoreData {
     RKLogConfigureByName("RestKit", RKLogLevelWarning);
     RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
-    
+
     NSManagedObjectModel *managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     _managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
-    
+
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:kRestEndpointURL]];
     objectManager.managedObjectStore = _managedObjectStore;
-    
+
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-    
+
     [_managedObjectStore createPersistentStoreCoordinator];
-    
+
     _persistantStorePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"AMPersistentData.sqlite"];
     // Delete Core Data for testing
     //[self clearCoreData];
-    
+
     NSError *error;
     NSPersistentStore *persistentStore = [_managedObjectStore addSQLitePersistentStoreAtPath:_persistantStorePath fromSeedDatabaseAtPath:nil
                                                                            withConfiguration:nil options:nil error:&error];
-    
+
     NSAssert(persistentStore, @"Failed to add persistent store with error: %@", error);
-    
+
     // Create the managed object contexts
     [_managedObjectStore createManagedObjectContexts];
-    
+
     // Configure a managed object cache to ensure we do not create duplicate objects
     _managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:_managedObjectStore.persistentStoreManagedObjectContext];
     RKManagedObjectStore.defaultStore = _managedObjectStore;
     _managedObjectContext = RKManagedObjectStore.defaultStore.mainQueueManagedObjectContext;
-    
+
     RKResponseDescriptor *RDUser = [self responseDescriptorUser:self.mappingUser];
     RKResponseDescriptor *RDProduct = [self responseDescriptorProduct:self.mappingProduct];
     [objectManager addResponseDescriptorsFromArray:@[RDProduct, RDUser]];
-    
+
     RKObjectManager.sharedManager = objectManager;
 }
 
@@ -215,19 +304,19 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
 - (RKEntityMapping *)mappingOrder {
     RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"AMOOrder" inManagedObjectStore:_managedObjectStore];
     [mapping addAttributeMappingsFromDictionary:@{@"id":@"orderID", @"products":@"productIDs"}];
-    
+
     RKAttributeMapping *orderTimeMapping = [RKAttributeMapping attributeMappingFromKeyPath:@"orderTime" toKeyPath:@"orderTime"];
     orderTimeMapping.valueTransformer = RKValueTransformer.iso8601TimestampToDateValueTransformer;
     [mapping addPropertyMapping:orderTimeMapping];
-    
+
     RKAttributeMapping *deliveryTimeMapping = [RKAttributeMapping attributeMappingFromKeyPath:@"deliveryTime" toKeyPath:@"deliveryTime"];
     deliveryTimeMapping.valueTransformer = RKValueTransformer.iso8601TimestampToDateValueTransformer;
     [mapping addPropertyMapping:deliveryTimeMapping];
-    
+
     NSEntityDescription *ordersEntity = [NSEntityDescription entityForName:@"AMOOrder" inManagedObjectContext:_managedObjectContext];
     NSRelationshipDescription *productsRelation = [ordersEntity relationshipsByName][@"products"];
     RKConnectionDescription *connection = [[RKConnectionDescription alloc] initWithRelationship:productsRelation attributes:@{ @"productIDs": @"productID" }];
-    
+
     [mapping addConnection:connection];
     mapping.identificationAttributes = @[@"orderID"];
     return mapping;
@@ -244,16 +333,16 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"AMOShoppingList" inManagedObjectStore:_managedObjectStore];
     [mapping addAttributeMappingsFromDictionary:@{@"id":@"shoppingListID", @"products":@"productIDs"}];
     [mapping addAttributeMappingsFromArray:@[@"name", @"autogenerate"]];
-    
+
     RKAttributeMapping *timeMapping = [RKAttributeMapping attributeMappingFromKeyPath:@"time" toKeyPath:@"time"];
     timeMapping.valueTransformer = RKValueTransformer.iso8601TimestampToDateValueTransformer;
-    
+
     [mapping addPropertyMapping:timeMapping];
-    
+
     NSEntityDescription *shoppingListEntity = [NSEntityDescription entityForName:@"AMOShoppingList" inManagedObjectContext:_managedObjectContext];
     NSRelationshipDescription *productsRelation = [shoppingListEntity relationshipsByName][@"products"];
     RKConnectionDescription *connection = [[RKConnectionDescription alloc] initWithRelationship:productsRelation attributes:@{ @"productIDs": @"productID" }];
-    
+
     [mapping addConnection:connection];
     mapping.identificationAttributes = @[@"shoppingListID"];
     return mapping;

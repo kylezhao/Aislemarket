@@ -52,17 +52,24 @@ extern const struct AMOShoppingListRelationships {
 
 //- (BOOL)validateTime:(id*)value_ error:(NSError**)error_;
 
-@property (nonatomic, strong) NSSet *products;
+@property (nonatomic, strong) NSOrderedSet *products;
 
-- (NSMutableSet*)productsSet;
+- (NSMutableOrderedSet*)productsSet;
 
 @end
 
 @interface _AMOShoppingList (ProductsCoreDataGeneratedAccessors)
-- (void)addProducts:(NSSet*)value_;
-- (void)removeProducts:(NSSet*)value_;
+- (void)addProducts:(NSOrderedSet*)value_;
+- (void)removeProducts:(NSOrderedSet*)value_;
 - (void)addProductsObject:(AMOProduct*)value_;
 - (void)removeProductsObject:(AMOProduct*)value_;
+
+- (void)insertObject:(AMOProduct*)value inProductsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromProductsAtIndex:(NSUInteger)idx;
+- (void)insertProducts:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeProductsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInProductsAtIndex:(NSUInteger)idx withObject:(AMOProduct*)value;
+- (void)replaceProductsAtIndexes:(NSIndexSet *)indexes withProducts:(NSArray *)values;
 
 @end
 
@@ -86,7 +93,7 @@ extern const struct AMOShoppingListRelationships {
 - (NSDate*)primitiveTime;
 - (void)setPrimitiveTime:(NSDate*)value;
 
-- (NSMutableSet*)primitiveProducts;
-- (void)setPrimitiveProducts:(NSMutableSet*)value;
+- (NSMutableOrderedSet*)primitiveProducts;
+- (void)setPrimitiveProducts:(NSMutableOrderedSet*)value;
 
 @end

@@ -25,12 +25,7 @@ static NSString * const kProductCellID = @"productCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:4.0f/255.0f
-                                                                           green:191.0f/255.0f
-                                                                            blue:143.0f/255.0f
-                                                                           alpha:1.0];
+
     [self setupSearchBar];
     
     self.fetchedResultsController = [AMDataManager.sharedManager productsFRCForDelegate:self];
@@ -99,7 +94,6 @@ static NSString * const kProductCellID = @"productCell";
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kProductCellID];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }

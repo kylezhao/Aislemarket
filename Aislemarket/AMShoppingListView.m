@@ -9,6 +9,7 @@
 #import "AMShoppingListView.h"
 #import "AMDataManager.h"
 #import "AMOShoppingList.h"
+#import "AMShoppingListDetailView.h"
 
 static NSString * const kShoppingListCellID = @"shoppingListCell";
 
@@ -20,24 +21,34 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:4.0f/255.0f
-                                                                           green:191.0f/255.0f
-                                                                            blue:143.0f/255.0f
-                                                                           alpha:1.0];
-    
+
     self.fetchedResultsController = [AMDataManager.sharedManager shoppingListsFRCForDelegate:self];
-    [AMDataManager.sharedManager loadShopplingLists];
+    [AMDataManager.sharedManager loadShopplingListsHandler:nil];
     
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
         NSLog(@"ShopplingList fetchedResultsController failed %@, %@", error, [error userInfo]);
     }
+
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor colorWithRed:4.0f/255.0f
+                                                          green:191.0f/255.0f
+                                                           blue:143.0f/255.0f
+                                                          alpha:1.0];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(refresh:)
+                  forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)refresh:(id)sender {
+    [[AMDataManager sharedManager] loadShopplingListsHandler:^(BOOL succsess, NSError *__autoreleasing *error) {
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -65,15 +76,15 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
     
     if (list.products.count > 2) {
         listPreviewDetail = [NSString.alloc initWithFormat:@"%@, %@, %@...",
-                             [list.products.allObjects[0] name],
-                             [list.products.allObjects[1] name],
-                             [list.products.allObjects[2] name]];
+                             [list.products[0] name],
+                             [list.products[1] name],
+                             [list.products[2] name]];
     } else if (list.products.count > 1) {
         listPreviewDetail = [NSString.alloc initWithFormat:@"%@, %@",
-                             [list.products.allObjects[0] name],
-                             [list.products.allObjects[1] name]];
+                             [list.products[0] name],
+                             [list.products[1] name]];
     } else {
-        listPreviewDetail = [NSString.alloc initWithFormat:@"%@",[list.products.anyObject name]];
+        listPreviewDetail = [NSString.alloc initWithFormat:@"%@",[list.products[0] name]];
     }
     
     UILabel *nameLable = (UILabel *)[cell viewWithTag:3];
@@ -126,6 +137,19 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+    }
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"shoppingListDetail"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        AMOShoppingList *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        AMShoppingListDetailView *controller = (AMShoppingListDetailView *)[segue destinationViewController];
+        [controller setShoppingList:object];
+        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+        controller.navigationItem.leftItemsSupplementBackButton = YES;
     }
 }
 
