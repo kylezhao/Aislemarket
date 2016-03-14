@@ -10,8 +10,9 @@
 #import "AMOProduct.h"
 #import "AMOUser.h"
 #import "AMOShoppingList.h"
-#import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
+#import <RestKit/RestKit.h>
+
 
 static NSString * const kRestEndpointURL = @"http://104.236.229.162:8080";
 static NSString * const kBasePath =        @"/simple-service-webapp/webapi/";
@@ -71,9 +72,8 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
 }
 - (NSFetchedResultsController *)shoppingListsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"AMOShoppingList"];
-    NSSortDescriptor *descriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"autogenerate" ascending:YES];
-    NSSortDescriptor *descriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
-    fetchRequest.sortDescriptors = @[descriptor1,descriptor2];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"time" ascending:YES];
+    fetchRequest.sortDescriptors = @[descriptor];
 
     // Setup fetched results
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
