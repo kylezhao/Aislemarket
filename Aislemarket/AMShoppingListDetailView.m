@@ -99,7 +99,7 @@ static NSString * const kProductCellID = @"productCell";
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     AMOProduct *product = self.shoppingList.products[indexPath.row];
     cell.textLabel.text = product.capitalisedName;
-    cell.detailTextLabel.text = product.formattedPrice;
+    cell.detailTextLabel.text = product.productID.description;//product.formattedPrice;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

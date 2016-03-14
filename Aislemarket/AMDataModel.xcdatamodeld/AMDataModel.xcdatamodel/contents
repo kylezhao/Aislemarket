@@ -13,7 +13,7 @@
         <attribute name="price" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="productID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="orders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AMOOrder" inverseName="products" inverseEntity="AMOOrder" syncable="YES"/>
-        <relationship name="shopplingLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AMOShoppingList" inverseName="products" inverseEntity="AMOShoppingList" syncable="YES"/>
+        <relationship name="shopplingLists" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="AMOShoppingList" inverseName="products" inverseEntity="AMOShoppingList" syncable="YES"/>
     </entity>
     <entity name="AMOShoppingList" representedClassName="AMOShoppingList" syncable="YES">
         <attribute name="autogenerate" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -30,7 +30,7 @@
     </entity>
     <elements>
         <element name="AMOOrder" positionX="360" positionY="-219" width="128" height="120"/>
-        <element name="AMOProduct" positionX="133" positionY="-222" width="128" height="135"/>
+        <element name="AMOProduct" positionX="133" positionY="-222" width="128" height="133"/>
         <element name="AMOShoppingList" positionX="-65" positionY="-216" width="128" height="28"/>
         <element name="AMOUser" positionX="133" positionY="-439" width="128" height="30"/>
     </elements>

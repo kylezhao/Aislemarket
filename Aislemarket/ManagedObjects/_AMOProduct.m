@@ -112,14 +112,74 @@ const struct AMOProductRelationships AMOProductRelationships = {
 
 @dynamic shopplingLists;
 
-- (NSMutableSet*)shopplingListsSet {
+- (NSMutableOrderedSet*)shopplingListsSet {
 	[self willAccessValueForKey:@"shopplingLists"];
 
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"shopplingLists"];
+	NSMutableOrderedSet *result = (NSMutableOrderedSet*)[self mutableOrderedSetValueForKey:@"shopplingLists"];
 
 	[self didAccessValueForKey:@"shopplingLists"];
 	return result;
 }
 
+@end
+
+@implementation _AMOProduct (ShopplingListsCoreDataGeneratedAccessors)
+- (void)addShopplingLists:(NSOrderedSet*)value_ {
+	[self.shopplingListsSet unionOrderedSet:value_];
+}
+- (void)removeShopplingLists:(NSOrderedSet*)value_ {
+	[self.shopplingListsSet minusOrderedSet:value_];
+}
+- (void)addShopplingListsObject:(AMOShoppingList*)value_ {
+	[self.shopplingListsSet addObject:value_];
+}
+- (void)removeShopplingListsObject:(AMOShoppingList*)value_ {
+	[self.shopplingListsSet removeObject:value_];
+}
+- (void)insertObject:(AMOShoppingList*)value inShopplingListsAtIndex:(NSUInteger)idx {
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"shopplingLists"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self shopplingLists]];
+    [tmpOrderedSet insertObject:value atIndex:idx];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"shopplingLists"];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"shopplingLists"];
+}
+- (void)removeObjectFromShopplingListsAtIndex:(NSUInteger)idx {
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"shopplingLists"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self shopplingLists]];
+    [tmpOrderedSet removeObjectAtIndex:idx];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"shopplingLists"];
+    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"shopplingLists"];
+}
+- (void)insertShopplingLists:(NSArray *)value atIndexes:(NSIndexSet *)indexes {
+    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"shopplingLists"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self shopplingLists]];
+    [tmpOrderedSet insertObjects:value atIndexes:indexes];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"shopplingLists"];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:@"shopplingLists"];
+}
+- (void)removeShopplingListsAtIndexes:(NSIndexSet *)indexes {
+    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"shopplingLists"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self shopplingLists]];
+    [tmpOrderedSet removeObjectsAtIndexes:indexes];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"shopplingLists"];
+    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:@"shopplingLists"];
+}
+- (void)replaceObjectInShopplingListsAtIndex:(NSUInteger)idx withObject:(AMOShoppingList*)value {
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"shopplingLists"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self shopplingLists]];
+    [tmpOrderedSet replaceObjectAtIndex:idx withObject:value];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"shopplingLists"];
+    [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"shopplingLists"];
+}
+- (void)replaceShopplingListsAtIndexes:(NSIndexSet *)indexes withShopplingLists:(NSArray *)value {
+    [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"shopplingLists"];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self shopplingLists]];
+    [tmpOrderedSet replaceObjectsAtIndexes:indexes withObjects:value];
+    [self setPrimitiveValue:tmpOrderedSet forKey:@"shopplingLists"];
+    [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"shopplingLists"];
+}
 @end
 

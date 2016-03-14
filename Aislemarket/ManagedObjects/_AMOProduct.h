@@ -55,9 +55,9 @@ extern const struct AMOProductRelationships {
 
 - (NSMutableSet*)ordersSet;
 
-@property (nonatomic, strong) NSSet *shopplingLists;
+@property (nonatomic, strong) NSOrderedSet *shopplingLists;
 
-- (NSMutableSet*)shopplingListsSet;
+- (NSMutableOrderedSet*)shopplingListsSet;
 
 @end
 
@@ -70,10 +70,17 @@ extern const struct AMOProductRelationships {
 @end
 
 @interface _AMOProduct (ShopplingListsCoreDataGeneratedAccessors)
-- (void)addShopplingLists:(NSSet*)value_;
-- (void)removeShopplingLists:(NSSet*)value_;
+- (void)addShopplingLists:(NSOrderedSet*)value_;
+- (void)removeShopplingLists:(NSOrderedSet*)value_;
 - (void)addShopplingListsObject:(AMOShoppingList*)value_;
 - (void)removeShopplingListsObject:(AMOShoppingList*)value_;
+
+- (void)insertObject:(AMOShoppingList*)value inShopplingListsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromShopplingListsAtIndex:(NSUInteger)idx;
+- (void)insertShopplingLists:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeShopplingListsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInShopplingListsAtIndex:(NSUInteger)idx withObject:(AMOShoppingList*)value;
+- (void)replaceShopplingListsAtIndexes:(NSIndexSet *)indexes withShopplingLists:(NSArray *)values;
 
 @end
 
@@ -100,7 +107,7 @@ extern const struct AMOProductRelationships {
 - (NSMutableSet*)primitiveOrders;
 - (void)setPrimitiveOrders:(NSMutableSet*)value;
 
-- (NSMutableSet*)primitiveShopplingLists;
-- (void)setPrimitiveShopplingLists:(NSMutableSet*)value;
+- (NSMutableOrderedSet*)primitiveShopplingLists;
+- (void)setPrimitiveShopplingLists:(NSMutableOrderedSet*)value;
 
 @end
