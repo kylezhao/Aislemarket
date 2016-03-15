@@ -31,9 +31,11 @@ static NSString * const kProductCellID = @"productCell";
     _inSwipeMode = NO;
     self.title = self.shoppingList.name;
 
-    UIBarButtonItem * addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                                target:self
-                                                                                action:@selector(addProduct:)];
+    UIBarButtonItem *addButton =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                  target:self
+                                                  action:@selector(addProduct:)];
+
     [self.navigationItem setRightBarButtonItems:@[self.editButtonItem, addButton]];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -71,7 +73,7 @@ static NSString * const kProductCellID = @"productCell";
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated{
     [super setEditing:editing animated:animated];
     if (!editing) {
-        [AMDataManager.sharedManager.managedObjectContext save:nil];
+        [[AMDataManager sharedManager] saveContext];
         [[AMDataManager sharedManager] requestUpdateList:self.shoppingList handler:nil];
     }
 }
@@ -84,7 +86,7 @@ static NSString * const kProductCellID = @"productCell";
     }
     [self.tableView beginUpdates];
     [products insertObject:product atIndex:0];
-    [AMDataManager.sharedManager.managedObjectContext save:nil];
+    [[AMDataManager sharedManager] saveContext];
     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
     [[AMDataManager sharedManager] requestUpdateList:self.shoppingList handler:nil];

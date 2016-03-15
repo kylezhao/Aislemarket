@@ -16,11 +16,13 @@
 
 static NSString * const kRestEndpointURL =   @"http://104.236.229.162:8080";
 static NSString * const kBasePath =          @"/simple-service-webapp/webapi/";
-static NSString * const kInventoryPath =     @"inventory/";
-static NSString * const kShoppingListsPath = @"shoppinglists/";
-static NSString * const kSatisfactionPath =  @"satisfaction/";
+static NSString * const kInventoryPath =     @"/inventory/";
+static NSString * const kListsPath =         @"/shoppinglists/";
+static NSString * const kListCreatePath =    @"/shoppinglists";
+static NSString * const kListUpdatePath =    @"/shoppinglists/update/";
+static NSString * const kSatisfactionPath =  @"/satisfaction/";
 static NSString * const kProductsPath =      @"/simple-service-webapp/webapi/products/";
-static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/users/login";
+static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/users/login/";
 
 /*
  http://104.236.229.162:8080/simple-service-webapp/webapi/products/
@@ -93,23 +95,29 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
 
 - (NSString *)inventoryPathFromCurrentUser {
     assert(self.currentUser);
-    return [[NSString alloc] initWithFormat:@"%@%@/%@",kBasePath,self.currentUser.email,kInventoryPath];
+    return [[NSString alloc] initWithFormat:@"%@%@%@",kBasePath,self.currentUser.email,kInventoryPath];
 }
 
 - (NSString *)shoppingListsPathFromCurrentUser {
     assert(self.currentUser);
-    return [[NSString alloc] initWithFormat:@"%@%@/%@",kBasePath,self.currentUser.email,kShoppingListsPath];
+    return [[NSString alloc] initWithFormat:@"%@%@%@",kBasePath,self.currentUser.email,kListsPath];
 }
 
 - (NSString *)satisfactionPathFromCurrentUser {
     assert(self.currentUser);
-    return [[NSString alloc] initWithFormat:@"%@%@%@/%@",kRestEndpointURL,kBasePath,self.currentUser.email,kSatisfactionPath];
+    return [[NSString alloc] initWithFormat:@"%@%@%@%@",kRestEndpointURL,kBasePath,self.currentUser.email,kSatisfactionPath];
+
+}
+
+- (NSString *)createShoppingListPathFromCurrentUser {
+    assert(self.currentUser);
+    return [[NSString alloc] initWithFormat:@"%@%@%@%@",kRestEndpointURL,kBasePath,self.currentUser.email,kListCreatePath];
 
 }
 
 - (NSString *)updateShoppingListPathFromCurrentUser {
     assert(self.currentUser);
-    return [[NSString alloc] initWithFormat:@"%@%@%@/%@update/",kRestEndpointURL,kBasePath,self.currentUser.email,kShoppingListsPath];
+    return [[NSString alloc] initWithFormat:@"%@%@%@%@",kRestEndpointURL,kBasePath,self.currentUser.email,kListUpdatePath];
 }
 
 #pragma mark - Network Requests
@@ -192,6 +200,12 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
                                             }];
 }
 
+- (void)requestCreateList:(NSString *)name handler:(void (^)(BOOL))handler {
+    NSDictionary * requestData = @{@"name":name,
+                                   @"products":[NSArray new]};
+    [self requestWithData:requestData url:self.createShoppingListPathFromCurrentUser method:@"PUT" handler:handler];
+}
+
 - (void)requestUpdateList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL))handler {
 
     NSMutableArray *productIDs = [[NSMutableArray alloc] init];
@@ -203,17 +217,18 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
     NSDictionary * requestData = @{@"id":shoppingList.shoppingListID,
                                    @"products":productIDs};
 
-    [self requestWithData:requestData url:self.updateShoppingListPathFromCurrentUser method:@"PUT"];
+    [self requestWithData:requestData url:self.updateShoppingListPathFromCurrentUser method:@"PUT" handler:handler];
 }
 
 - (void)requestSatisfaction:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL))handler {
 
     NSDictionary * requestData = @{@"product_id":product.productID,
                                    @"approve":sat?@"true":@"false"};
-    [self requestWithData:requestData url:self.satisfactionPathFromCurrentUser method:@"PUT"];
+    [self requestWithData:requestData url:self.satisfactionPathFromCurrentUser method:@"PUT" handler:handler];
 }
 
-- (void)requestWithData:(NSDictionary *)requestData url:(NSString *)url method:(NSString *)method {
+- (void)requestWithData:(NSDictionary *)requestData url:(NSString *)url method:(NSString *)method
+                handler:(void (^)(BOOL))handler{
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     NSError *error;
@@ -226,6 +241,7 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
         NSLog(@"requestReply: %@", requestReply);
+        if(handler)handler(YES);
     }] resume];
 }
 
@@ -279,6 +295,15 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
         NSLog(@"Deleted file %@ ",_persistantStorePath);
     } else {
         NSLog(@"Could not delete file %@ ",[error localizedDescription]);
+    }
+}
+
+- (void)saveContext {
+    if (_managedObjectContext != nil) {
+        NSError *error = nil;
+        if ([_managedObjectContext hasChanges] && ![_managedObjectContext save:&error]) {
+            abort();
+        }
     }
 }
 
@@ -492,13 +517,5 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
  return product;
  }
 
- - (void)saveContext {
- if (_managedObjectContext != nil) {
- NSError *error = nil;
- if ([_managedObjectContext hasChanges] && ![_managedObjectContext save:&error]) {
- NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
- abort();
- }
- }
- }
+
  */

@@ -25,9 +25,11 @@
 - (void)requestProductsHandler:(void (^)(BOOL))handler;
 - (void)requestInventoryHandler:(void (^)(BOOL))handler;
 - (void)requestListsHandler:(void (^)(BOOL))handler;
+- (void)requestCreateList:(NSString *)name handler:(void (^)(BOOL))handler;
 - (void)requestUpdateList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL))handler;
 - (void)requestSatisfaction:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL))handler;
 - (void)clearCoreData;
+- (void)saveContext;
 @end
 /*
 - (AMOProduct *)insertProductName:(NSString*)name

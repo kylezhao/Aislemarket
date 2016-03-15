@@ -24,11 +24,18 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
 
     self.fetchedResultsController = [AMDataManager.sharedManager shoppingListsFRCForDelegate:self];
     [[AMDataManager sharedManager] requestListsHandler:nil];
-    
+
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
         NSLog(@"ShopplingList fetchedResultsController failed %@, %@", error, [error userInfo]);
     }
+
+    UIBarButtonItem *addButton =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                  target:self
+                                                  action:@selector(newList:)];
+
+    [self.navigationItem setRightBarButtonItem:addButton];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor colorWithRed:4.0f/255.0f
@@ -39,6 +46,63 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
     [self.refreshControl addTarget:self
                             action:@selector(refresh:)
                   forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)newList:(id)sender {
+    UIAlertController *alert =
+    [UIAlertController alertControllerWithTitle:@"New Shopping List" message:nil
+                                 preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addTextFieldWithConfigurationHandler:
+     ^(UITextField*textField){textField.placeholder=@"Name";}];
+
+    UIAlertAction *create =
+    [UIAlertAction actionWithTitle:@"Create"
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction *action) {
+                               [alert dismissViewControllerAnimated:YES completion:nil];
+                               [self createNewList:alert.textFields.firstObject.text];
+                           }];
+
+    UIAlertAction *cancel =
+    [UIAlertAction actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                           handler:^(UIAlertAction *action){
+                               [alert dismissViewControllerAnimated:YES completion:nil];
+                           }];
+
+    [alert addAction:create];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)createNewList:(NSString *)name {
+    if (name.length < 1) {
+        UIAlertController *alert =
+        [UIAlertController alertControllerWithTitle:@"Name Too Short"
+                                            message:@"Please use a name longer then one character"
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *ok =
+        [UIAlertAction actionWithTitle:@"Ok"
+                                 style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action) {
+                                   [alert dismissViewControllerAnimated:YES completion:nil];}];
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+// Currently the API does not take the UUID instead it creates it
+// Whould have to pass the name in then fetch from the server again
+//    AMOShoppingList *list =
+//    [AMOShoppingList insertInManagedObjectContext:[AMDataManager sharedManager].managedObjectContext];
+//    [list setAutogenerateValue:NO];
+//    [list setName:name];
+//    [list setShoppingListID:[[NSUUID UUID] UUIDString]];
+//    [list setTime:[NSDate date]];
+//    [[AMDataManager sharedManager] saveContext];
+    [[AMDataManager sharedManager] requestCreateList:name handler:^(BOOL succsess) {
+        [[AMDataManager sharedManager] requestListsHandler:nil];
+    }];
 }
 
 - (void)refresh:(id)sender {
@@ -67,9 +131,9 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     AMOShoppingList *list = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    NSString *listPreviewDetail;
-    
+
+    NSString *listPreviewDetail = nil;
+
     if (list.products.count > 2) {
         listPreviewDetail = [NSString.alloc initWithFormat:@"%@, %@, %@...",
                              [list.products[0] name],
@@ -79,17 +143,19 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
         listPreviewDetail = [NSString.alloc initWithFormat:@"%@, %@",
                              [list.products[0] name],
                              [list.products[1] name]];
-    } else {
+    } else if (list.products.count > 0)  {
         listPreviewDetail = [NSString.alloc initWithFormat:@"%@",[list.products[0] name]];
+    } else {
+        listPreviewDetail = @"Empty List";
     }
-    
+
     UILabel *nameLable = (UILabel *)[cell viewWithTag:3];
     UILabel *listPreviewLable = (UILabel *)[cell viewWithTag:1];
     UILabel *dateLable = (UILabel *)[cell viewWithTag:2];
-    
+
     nameLable.text = list.name;
     listPreviewLable.text = listPreviewDetail;
-    
+
     if (list.autogenerateValue) {
         dateLable.text = @"Autogenerated";
     } else {
@@ -98,12 +164,12 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
 }
 
 - (NSString *)formattedDate:(NSDate *)date {
-    
+
     NSDate *now = NSDate.date;
     NSDate *oneDayAgo = [now dateByAddingTimeInterval:-24*60*60];
     NSDate *oneWeekAgo = [now dateByAddingTimeInterval:-7*24*60*60];
     NSDateFormatter *formatter = NSDateFormatter.alloc.init;
-    
+
     if ([date compare:oneDayAgo] == NSOrderedDescending) {
         [formatter setDateFormat:@"h:mm a"];
     } else if ([date compare:oneWeekAgo] == NSOrderedDescending) {
@@ -122,18 +188,12 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        NSError *error = nil;
-        if (![context save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
+// Enable for deleting shopping lists
+//if (editingStyle == UITableViewCellEditingStyleDelete) {
+//    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+//    [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+//    [[AMDataManager sharedManager] saveContext];
+//}
 }
 
 #pragma mark - Segues
@@ -161,11 +221,11 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
+
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
+
         default:
             return;
     }
@@ -175,20 +235,20 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
     UITableView *tableView = self.tableView;
-    
+
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
+
         case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
+
         case NSFetchedResultsChangeUpdate:
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
-            
+
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
