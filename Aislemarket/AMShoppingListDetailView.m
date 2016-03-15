@@ -85,9 +85,9 @@ static NSString * const kProductCellID = @"productCell";
         return;
     }
     [self.tableView beginUpdates];
-    [products insertObject:product atIndex:0];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:products.count inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.shoppingList addProductsObject:product];
     [[AMDataManager sharedManager] saveContext];
-    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
     [[AMDataManager sharedManager] requestUpdateList:self.shoppingList handler:nil];
 }

@@ -134,8 +134,13 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
 
     NSString *listPreviewDetail = nil;
 
-    if (list.products.count > 2) {
+    if (list.products.count > 3) {
         listPreviewDetail = [NSString.alloc initWithFormat:@"%@, %@, %@...",
+                             [list.products[0] name],
+                             [list.products[1] name],
+                             [list.products[2] name]];
+    } else if (list.products.count > 2) {
+        listPreviewDetail = [NSString.alloc initWithFormat:@"%@, %@, %@",
                              [list.products[0] name],
                              [list.products[1] name],
                              [list.products[2] name]];

@@ -61,10 +61,15 @@ static NSString * const kProductCellID = @"productCell";
 //
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     // When delegate is not nil, this view is used as the product picker.
     // Parent view will pop this view in selectedProduct
     if (self.delegate) {
-        [self.delegate selectedProduct:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        if ([tableView isEqual:self.tableView]) {
+            [self.delegate selectedProduct:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        } else {
+            [self.delegate selectedProduct:self.searchResultsView.filteredProducts[indexPath.row]];
+        }
         self.delegate = nil;
     }
 }
