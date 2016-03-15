@@ -131,26 +131,28 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
                                                 AMOUser *user = mappingResult.firstObject;
                                                 if (user) {
                                                     self.currentUser = user;
-                                                    handler(YES);
+                                                    if(handler)handler(YES);
                                                 } else {
-                                                    handler(NO);
+                                                    if(handler)handler(NO);
                                                 }
                                             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                handler(NO);
+                                                if(handler)handler(NO);
                                             }];
 }
 
-- (void)requestProducts {
+- (void)requestProductsHandler:(void (^)(BOOL))handler {
     [RKObjectManager.sharedManager getObjectsAtPath:kProductsPath
                                          parameters:nil
                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                 RKLogInfo(@"Loaded Products:%@",mappingResult.dictionary);
+                                                if(handler)handler(YES);
                                             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                 RKLogError(@"Load products failed: %@", error);
+                                                if(handler)handler(NO);
                                             }];
 }
 
-- (void)requestInventory {
+- (void)requestInventoryHandler:(void (^)(BOOL))handler {
     if (!self.currentUser) {assert(0);}
 
     if (!_addedInventoryDescriptor) {
@@ -163,8 +165,10 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
                                          parameters:nil
                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                 RKLogInfo(@"Loaded inventory:%@",mappingResult.dictionary);
+                                                if(handler)handler(YES);
                                             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                 RKLogError(@"Loading inventory failed: %@", error);
+                                                if(handler)handler(NO);
                                             }];
 }
 
@@ -181,14 +185,10 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
                                          parameters:nil
                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                 RKLogInfo(@"Loaded Shopping Lists:%@",mappingResult.dictionary);
-                                                if(handler){
-                                                    handler(YES);
-                                                }
+                                                if(handler)handler(YES);
                                             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                 RKLogError(@"Load ShoppingLists failed: %@", error);
-                                                if(handler){
-                                                    handler(NO);
-                                                }
+                                                if(handler)handler(NO);
                                             }];
 }
 

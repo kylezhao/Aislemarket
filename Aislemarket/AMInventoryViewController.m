@@ -26,12 +26,29 @@ static NSString * const kProductCellID = @"productCell";
     [self setupSearchBar];
 
     self.fetchedResultsController = [AMDataManager.sharedManager productsFRCForDelegate:self];
-    [[AMDataManager sharedManager] requestInventory];
+    [[AMDataManager sharedManager] requestInventoryHandler:nil];
 
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
         NSLog(@"Products fetchedResultsController failed %@, %@", error, [error userInfo]);
     }
+
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor colorWithRed:4.0f/255.0f
+                                                          green:191.0f/255.0f
+                                                           blue:143.0f/255.0f
+                                                          alpha:1.0];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshProducts:)
+                  forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)refreshProducts:(id)sender {
+    [[AMDataManager sharedManager] requestInventoryHandler:^(BOOL succsess) {
+        [self.refreshControl endRefreshing];
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)setupSearchBar {
@@ -233,17 +250,6 @@ static NSString * const kProductCellID = @"productCell";
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
 }
+
 @end
 
-
-//
-//id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][0];
-//NSUInteger num = [sectionInfo numberOfObjects];
-//
-//AMOProduct *product;
-//NSIndexPath *index;
-//for (NSUInteger i = 0; i<num; i++) {
-//    index = [NSIndexPath indexPathForRow:i inSection:0];
-//    product = [self.fetchedResultsController objectAtIndexPath:index];
-//    NSLog(@"Prod:%@, %@",product.productID,product.inventory);
-//}

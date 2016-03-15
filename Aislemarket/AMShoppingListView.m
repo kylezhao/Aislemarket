@@ -41,10 +41,6 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
                   forControlEvents:UIControlEventValueChanged];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 - (void)refresh:(id)sender {
     [[AMDataManager sharedManager] requestListsHandler:^(BOOL succsess) {
         [self.refreshControl endRefreshing];

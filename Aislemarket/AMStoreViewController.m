@@ -26,7 +26,7 @@ static NSString * const kProductCellID = @"productCell";
     [self setupSearchBar];
     
     self.fetchedResultsController = [AMDataManager.sharedManager productsFRCForDelegate:self];
-    [[AMDataManager sharedManager] requestProducts];
+    [[AMDataManager sharedManager] requestProductsHandler:nil];
     
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
@@ -239,4 +239,5 @@ static NSString * const kProductCellID = @"productCell";
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
 }
+
 @end

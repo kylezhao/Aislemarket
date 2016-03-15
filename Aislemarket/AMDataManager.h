@@ -22,8 +22,8 @@
 - (NSFetchedResultsController *)productsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate;
 - (NSFetchedResultsController *)shoppingListsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate;
 - (void)requestLogin:(NSString *)username password:(NSString *)password handler:(void (^)(BOOL))handler;
-- (void)requestProducts;
-- (void)requestInventory;
+- (void)requestProductsHandler:(void (^)(BOOL))handler;
+- (void)requestInventoryHandler:(void (^)(BOOL))handler;
 - (void)requestListsHandler:(void (^)(BOOL))handler;
 - (void)requestUpdateList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL))handler;
 - (void)requestSatisfaction:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL))handler;
