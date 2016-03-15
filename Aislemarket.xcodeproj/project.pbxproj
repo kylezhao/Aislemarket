@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		A965DAFE5A327AE5E674D8D3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B7F9061908B820BB7A6CCB /* libPods.a */; };
 		C86E504C1C96AFC700A13CBC /* AMShoppingListDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C86E504B1C96AFC700A13CBC /* AMShoppingListDetailView.m */; };
+		C88F1C171C98357000599F44 /* AMToastAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F1C161C98357000599F44 /* AMToastAlert.swift */; };
 		C8D7A2131B614F41000CF9DE /* AMDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */; };
 		C8D7A2271B615931000CF9DE /* _AMOProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A21C1B615931000CF9DE /* _AMOProduct.m */; };
 		C8D7A2281B615931000CF9DE /* _AMOShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A21E1B615931000CF9DE /* _AMOShoppingList.m */; };
@@ -60,6 +61,8 @@
 		80B7F9061908B820BB7A6CCB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C86E504A1C96AFC700A13CBC /* AMShoppingListDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMShoppingListDetailView.h; sourceTree = "<group>"; };
 		C86E504B1C96AFC700A13CBC /* AMShoppingListDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMShoppingListDetailView.m; sourceTree = "<group>"; };
+		C88F1C151C98357000599F44 /* Aislemarket-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Aislemarket-Bridging-Header.h"; sourceTree = "<group>"; };
+		C88F1C161C98357000599F44 /* AMToastAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMToastAlert.swift; sourceTree = "<group>"; };
 		C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMDataModel.xcdatamodel; sourceTree = "<group>"; };
 		C8D7A21B1B615931000CF9DE /* _AMOProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _AMOProduct.h; sourceTree = "<group>"; };
 		C8D7A21C1B615931000CF9DE /* _AMOProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AMOProduct.m; sourceTree = "<group>"; };
@@ -87,7 +90,7 @@
 		C8EA96471B5A472D009D1DDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C8EA96481B5A472D009D1DDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C8EA96511B5A472D009D1DDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C8EA96531B5A472D009D1DDA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Aislemarket/Images.xcassets; sourceTree = "<group>"; };
+		C8EA96531B5A472D009D1DDA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C8EA96561B5A472D009D1DDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C8EA965C1B5A472D009D1DDA /* AislemarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AislemarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8EA96611B5A472D009D1DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -182,9 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				C8EA96421B5A472D009D1DDA /* Aislemarket */,
-				C8EA96501B5A472D009D1DDA /* Main.storyboard */,
-				C8EA96531B5A472D009D1DDA /* Images.xcassets */,
-				C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */,
 				C8EA965F1B5A472D009D1DDA /* AislemarketTests */,
 				C8EA96411B5A472D009D1DDA /* Products */,
 				8C7F93B45372524D3E1FDFF8 /* Pods */,
@@ -214,10 +214,15 @@
 				C8EA96761B5A93F3009D1DDA /* AMSettingsViewController.m */,
 				C8D7A22D1B615B65000CF9DE /* AMDataManager.h */,
 				C8D7A22E1B615B65000CF9DE /* AMDataManager.m */,
+				C88F1C161C98357000599F44 /* AMToastAlert.swift */,
 				C87E156F1C97FD8A00762BB5 /* Store */,
 				C886891E1C973E1000E2BDA9 /* ShoppingList */,
 				C8D7A21A1B615931000CF9DE /* ManagedObjects */,
 				C8EA96431B5A472D009D1DDA /* Supporting Files */,
+				C88F1C151C98357000599F44 /* Aislemarket-Bridging-Header.h */,
+				C8EA96501B5A472D009D1DDA /* Main.storyboard */,
+				C8EA96531B5A472D009D1DDA /* Images.xcassets */,
+				C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */,
 			);
 			path = Aislemarket;
 			sourceTree = "<group>";
@@ -417,6 +422,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C88F1C171C98357000599F44 /* AMToastAlert.swift in Sources */,
 				C8D7A2291B615931000CF9DE /* _AMOUser.m in Sources */,
 				C86E504C1C96AFC700A13CBC /* AMShoppingListDetailView.m in Sources */,
 				C8D7A22A1B615931000CF9DE /* AMOProduct.m in Sources */,
@@ -462,7 +468,6 @@
 				C8EA96511B5A472D009D1DDA /* Base */,
 			);
 			name = Main.storyboard;
-			path = Aislemarket;
 			sourceTree = "<group>";
 		};
 		C8EA96551B5A472D009D1DDA /* LaunchScreen.xib */ = {
@@ -576,10 +581,13 @@
 			baseConfigurationReference = E5A71E348C8855E93F35821F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Aislemarket/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mobilewarg.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Aislemarket/Aislemarket-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/Pods/**";
 			};
@@ -590,10 +598,12 @@
 			baseConfigurationReference = 4749A72CDF557C9762A4A6BE /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Aislemarket/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mobilewarg.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Aislemarket/Aislemarket-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/Pods/**";
 			};
@@ -677,8 +687,7 @@
 				C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */,
 			);
 			currentVersion = C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */;
-			name = AMDataModel.xcdatamodeld;
-			path = Aislemarket/AMDataModel.xcdatamodeld;
+			path = AMDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

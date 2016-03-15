@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>PureLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>RKValueTransformers.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,7 +52,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1253B91C09B3D4DE5BD264032F3808F4</key>
+		<key>1EC119DA672DA1F544F66AD1CD23728F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>28908FABF5526ACC6BC76DA2E699FF78</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,22 +67,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7895AF6898A365BE534E9810625AECA7</key>
+		<key>75064D2DDDFD8670E961F4C1A5039DA8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BA33744A16973BA4F37AC5E3A81F028E</key>
+		<key>A73BD53E743E9C6F39BE34A8322DC8B6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C2CBF50A29DAD392E91E7DE93B4FA137</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>C47E006176ABF4755350B88C088C3F0D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E6CA36D61A29535D5C76C2BF65F78335</key>
 		<dict>
 			<key>primary</key>
 			<true/>

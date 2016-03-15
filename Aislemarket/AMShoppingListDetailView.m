@@ -15,6 +15,7 @@ alpha:1.0]
 #import "AMDataManager.h"
 #import "AMOProduct.h"
 #import "AMStoreViewController.h"
+#include "Aislemarket-Swift.h"
 
 static NSString * const kProductCellID = @"productCell";
 
@@ -155,6 +156,8 @@ static NSString * const kProductCellID = @"productCell";
                                           [[AMDataManager sharedManager] requestSatisfaction:NO product:p handler:nil];
                                           [self.tableView setEditing:NO];
                                           NSLog(@"Hates Product: %@, %@",p.name, p.productID);
+                                          NSString *message = [[NSString alloc] initWithFormat:@"You hate %@",p.name];
+                                          [AMToastAlert showAlert:message type:AMToastTypeCritical];
                                       }];
 
         UITableViewRowAction * like =[UITableViewRowAction
@@ -165,6 +168,8 @@ static NSString * const kProductCellID = @"productCell";
                                           [[AMDataManager sharedManager] requestSatisfaction:YES product:p handler:nil];
                                           [self.tableView setEditing:NO];
                                           NSLog(@"Like Product: %@, %@",p.name, p.productID);
+                                          NSString *message = [[NSString alloc] initWithFormat:@"You liked %@",p.name];
+                                          [AMToastAlert showAlert:message type:AMToastTypeInformation];
                                       }];
 
         like.backgroundColor = UIColorFromRGB(0x4CD964);
