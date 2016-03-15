@@ -43,33 +43,35 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
         NSLog(@"Login: %@ : %@ ",self.emailField.text,self.passwordField.text);
-        
-        [AMDataManager.sharedManager loginUsername:self.emailField.text
-                                          password:self.passwordField.text
-                                           handler:^(BOOL succsess, NSError *__autoreleasing *error) {
-            if (succsess) {
-                UIWindow *window = UIApplication.sharedApplication.delegate.window;
-                window.rootViewController =
-                [window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"tabViewController"];
-            } else {
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Credentials"
-                                                                               message:@"Please check your Email and Password are correct"
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
 
-                UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
-                                                             style:UIAlertActionStyleDefault
-                                                           handler:^(UIAlertAction * _Nonnull action) {
-                    [alert dismissViewControllerAnimated:YES completion:nil];
-                }];
-                [alert addAction:ok];
-                [self presentViewController:alert animated:YES completion:nil];
-                
-            }
-        }];
+        [AMDataManager.sharedManager requestLogin:self.emailField.text
+                                         password:self.passwordField.text
+                                          handler:
+         ^(BOOL succsess) {
+             if (succsess) {
+                 UIWindow *window = UIApplication.sharedApplication.delegate.window;
+                 window.rootViewController =
+                 [window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"tabViewController"];
+             } else {
+                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Credentials"
+                                                                                message:@"Please check your Email and Password are correct"
+                                                                         preferredStyle:UIAlertControllerStyleAlert];
+
+                 UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                                [alert dismissViewControllerAnimated:YES completion:nil];
+                                                            }];
+                 [alert addAction:ok];
+                 [self presentViewController:alert animated:YES completion:nil];
+
+             }
+         }];
     }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
+
 @end

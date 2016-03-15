@@ -23,7 +23,7 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
     [super viewDidLoad];
 
     self.fetchedResultsController = [AMDataManager.sharedManager shoppingListsFRCForDelegate:self];
-    [AMDataManager.sharedManager loadShopplingListsHandler:nil];
+    [[AMDataManager sharedManager] requestListsHandler:nil];
     
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
@@ -46,7 +46,7 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
 }
 
 - (void)refresh:(id)sender {
-    [[AMDataManager sharedManager] loadShopplingListsHandler:^(BOOL succsess, NSError *__autoreleasing *error) {
+    [[AMDataManager sharedManager] requestListsHandler:^(BOOL succsess) {
         [self.refreshControl endRefreshing];
     }];
 }

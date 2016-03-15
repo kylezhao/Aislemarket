@@ -62,7 +62,7 @@ static NSString * const kProductCellID = @"productCell";
 }
 
 - (void)refreshProducts:(id)sender {
-    [[AMDataManager sharedManager] loadShopplingListsHandler:^(BOOL succsess, NSError *__autoreleasing *error) {
+    [[AMDataManager sharedManager] requestListsHandler:^(BOOL succsess) {
         [self.refreshControl endRefreshing];
         [self.tableView reloadData];
     }];
@@ -72,7 +72,7 @@ static NSString * const kProductCellID = @"productCell";
     [super setEditing:editing animated:animated];
     if (!editing) {
         [AMDataManager.sharedManager.managedObjectContext save:nil];
-        [AMDataManager.sharedManager updateShoppingList:self.shoppingList handler:nil];
+        [[AMDataManager sharedManager] requestUpdateList:self.shoppingList handler:nil];
     }
 }
 
@@ -87,7 +87,7 @@ static NSString * const kProductCellID = @"productCell";
     [AMDataManager.sharedManager.managedObjectContext save:nil];
     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
-    [AMDataManager.sharedManager updateShoppingList:self.shoppingList handler:nil];
+    [[AMDataManager sharedManager] requestUpdateList:self.shoppingList handler:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -150,7 +150,7 @@ static NSString * const kProductCellID = @"productCell";
                                       title:@"Hate"
                                       handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
                                           AMOProduct *p = self.shoppingList.products[indexPath.row];
-                                          [AMDataManager.sharedManager satisfactionRequest:NO product:p handler:nil];
+                                          [[AMDataManager sharedManager] requestSatisfaction:NO product:p handler:nil];
                                           [self.tableView setEditing:NO];
                                           NSLog(@"Hates Product: %@, %@",p.name, p.productID);
                                       }];
@@ -160,7 +160,7 @@ static NSString * const kProductCellID = @"productCell";
                                       title:@"Like"
                                       handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
                                           AMOProduct *p = self.shoppingList.products[indexPath.row];
-                                          [AMDataManager.sharedManager satisfactionRequest:YES product:p handler:nil];
+                                          [[AMDataManager sharedManager] requestSatisfaction:YES product:p handler:nil];
                                           [self.tableView setEditing:NO];
                                           NSLog(@"Like Product: %@, %@",p.name, p.productID);
                                       }];

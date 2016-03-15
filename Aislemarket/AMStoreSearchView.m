@@ -17,7 +17,6 @@ static NSString * const kProductCellID = @"productCell";
     [super viewDidLoad];
 }
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.filteredProducts.count;
 }
@@ -28,7 +27,6 @@ static NSString * const kProductCellID = @"productCell";
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kProductCellID];
     }
     AMOProduct *product = self.filteredProducts[indexPath.row];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = product.capitalisedName;
     cell.detailTextLabel.text = product.formattedPrice;
     return cell;

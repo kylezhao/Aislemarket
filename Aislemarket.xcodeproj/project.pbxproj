@@ -87,7 +87,7 @@
 		C8EA96471B5A472D009D1DDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C8EA96481B5A472D009D1DDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C8EA96511B5A472D009D1DDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C8EA96531B5A472D009D1DDA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C8EA96531B5A472D009D1DDA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Aislemarket/Images.xcassets; sourceTree = "<group>"; };
 		C8EA96561B5A472D009D1DDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C8EA965C1B5A472D009D1DDA /* AislemarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AislemarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8EA96611B5A472D009D1DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -137,6 +137,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C87E156F1C97FD8A00762BB5 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				C8EA96721B5A93D2009D1DDA /* AMStoreViewController.h */,
+				C8EA96731B5A93D2009D1DDA /* AMStoreViewController.m */,
+				C8D7A2301B616796000CF9DE /* AMStoreSearchView.h */,
+				C8D7A2311B616796000CF9DE /* AMStoreSearchView.m */,
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
 		C886891E1C973E1000E2BDA9 /* ShoppingList */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +182,9 @@
 			isa = PBXGroup;
 			children = (
 				C8EA96421B5A472D009D1DDA /* Aislemarket */,
+				C8EA96501B5A472D009D1DDA /* Main.storyboard */,
+				C8EA96531B5A472D009D1DDA /* Images.xcassets */,
+				C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */,
 				C8EA965F1B5A472D009D1DDA /* AislemarketTests */,
 				C8EA96411B5A472D009D1DDA /* Products */,
 				8C7F93B45372524D3E1FDFF8 /* Pods */,
@@ -192,23 +206,16 @@
 			children = (
 				C8EA96471B5A472D009D1DDA /* AppDelegate.h */,
 				C8EA96481B5A472D009D1DDA /* AppDelegate.m */,
-				C8EA96501B5A472D009D1DDA /* Main.storyboard */,
 				C8D9CD6E1B65516700F4D00E /* AMLoginView.h */,
 				C8D9CD6F1B65516700F4D00E /* AMLoginView.m */,
-				C886891E1C973E1000E2BDA9 /* ShoppingList */,
 				C8EA966F1B5A93B1009D1DDA /* AMInventoryViewController.h */,
 				C8EA96701B5A93B1009D1DDA /* AMInventoryViewController.m */,
 				C8EA96751B5A93F3009D1DDA /* AMSettingsViewController.h */,
 				C8EA96761B5A93F3009D1DDA /* AMSettingsViewController.m */,
-				C8EA96721B5A93D2009D1DDA /* AMStoreViewController.h */,
-				C8EA96731B5A93D2009D1DDA /* AMStoreViewController.m */,
-				C8D7A2301B616796000CF9DE /* AMStoreSearchView.h */,
-				C8D7A2311B616796000CF9DE /* AMStoreSearchView.m */,
 				C8D7A22D1B615B65000CF9DE /* AMDataManager.h */,
 				C8D7A22E1B615B65000CF9DE /* AMDataManager.m */,
-				C8EA96531B5A472D009D1DDA /* Images.xcassets */,
-				C8EA96551B5A472D009D1DDA /* LaunchScreen.xib */,
-				C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */,
+				C87E156F1C97FD8A00762BB5 /* Store */,
+				C886891E1C973E1000E2BDA9 /* ShoppingList */,
 				C8D7A21A1B615931000CF9DE /* ManagedObjects */,
 				C8EA96431B5A472D009D1DDA /* Supporting Files */,
 			);
@@ -218,6 +225,7 @@
 		C8EA96431B5A472D009D1DDA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C8EA96551B5A472D009D1DDA /* LaunchScreen.xib */,
 				C8EA96441B5A472D009D1DDA /* Info.plist */,
 				C8EA96451B5A472D009D1DDA /* main.m */,
 			);
@@ -454,6 +462,7 @@
 				C8EA96511B5A472D009D1DDA /* Base */,
 			);
 			name = Main.storyboard;
+			path = Aislemarket;
 			sourceTree = "<group>";
 		};
 		C8EA96551B5A472D009D1DDA /* LaunchScreen.xib */ = {
@@ -668,7 +677,8 @@
 				C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */,
 			);
 			currentVersion = C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */;
-			path = AMDataModel.xcdatamodeld;
+			name = AMDataModel.xcdatamodeld;
+			path = Aislemarket/AMDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

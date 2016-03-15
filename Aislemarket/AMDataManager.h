@@ -21,14 +21,13 @@
 + (AMDataManager *)sharedManager;
 - (NSFetchedResultsController *)productsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate;
 - (NSFetchedResultsController *)shoppingListsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate;
-- (void)loginUsername:(NSString *)username password:(NSString *)password handler:(void (^)(BOOL succsess, NSError **error))handler;
-- (void)loadInventory;
-- (void)loadProducts;
-- (void)loadShopplingListsHandler:(void (^)(BOOL succsess, NSError **error))handler;
-- (void)satisfactionRequest:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL succsess, NSError **error))handler;
-- (void)updateShoppingList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL succsess, NSError **error))handler;
+- (void)requestLogin:(NSString *)username password:(NSString *)password handler:(void (^)(BOOL))handler;
+- (void)requestProducts;
+- (void)requestInventory;
+- (void)requestListsHandler:(void (^)(BOOL))handler;
+- (void)requestUpdateList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL))handler;
+- (void)requestSatisfaction:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL))handler;
 - (void)clearCoreData;
-
 @end
 /*
 - (AMOProduct *)insertProductName:(NSString*)name

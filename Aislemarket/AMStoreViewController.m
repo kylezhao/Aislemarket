@@ -26,7 +26,7 @@ static NSString * const kProductCellID = @"productCell";
     [self setupSearchBar];
     
     self.fetchedResultsController = [AMDataManager.sharedManager productsFRCForDelegate:self];
-    [AMDataManager.sharedManager loadProducts];
+    [[AMDataManager sharedManager] requestProducts];
     
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {

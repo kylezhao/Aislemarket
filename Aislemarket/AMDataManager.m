@@ -14,21 +14,23 @@
 #import <RestKit/RestKit.h>
 
 
-static NSString * const kRestEndpointURL = @"http://104.236.229.162:8080";
-static NSString * const kBasePath =        @"/simple-service-webapp/webapi/";
-static NSString * const kInventoryPath =   @"inventory/";
-static NSString * const kShoppingListsPath=@"shoppinglists/";
-static NSString * const kSatisfactionPath= @"satisfaction/";
-static NSString * const kProductsPath =    @"/simple-service-webapp/webapi/products/";
-static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users/login";
+static NSString * const kRestEndpointURL =   @"http://104.236.229.162:8080";
+static NSString * const kBasePath =          @"/simple-service-webapp/webapi/";
+static NSString * const kInventoryPath =     @"inventory/";
+static NSString * const kShoppingListsPath = @"shoppinglists/";
+static NSString * const kSatisfactionPath =  @"satisfaction/";
+static NSString * const kProductsPath =      @"/simple-service-webapp/webapi/products/";
+static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/users/login";
 
-//http://104.236.229.162:8080/simple-service-webapp/webapi/products/
-//http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/orders/
-//http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/shoppinglists/
-//http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/shoppinglists/update/
-//http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/satisfaction/
-//http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/inventory/
-//http://104.236.229.162:8080/simple-service-webapp/webapi/users/login?userid=p8zhao%40uwaterloo.ca&password=AMarket123
+/*
+ http://104.236.229.162:8080/simple-service-webapp/webapi/products/
+ http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/orders/
+ http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/shoppinglists/
+ http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/shoppinglists/update/
+ http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/satisfaction/
+ http://104.236.229.162:8080/simple-service-webapp/webapi/p8zhao%40uwaterloo.ca/inventory/
+ http://104.236.229.162:8080/simple-service-webapp/webapi/users/login?userid=p8zhao%40uwaterloo.ca&password=AMarket123
+ */
 
 @implementation AMDataManager {
     RKManagedObjectStore *_managedObjectStore;
@@ -51,10 +53,12 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
         _addedInventoryDescriptor = NO;
         _addedShoppingListDescriptor = NO;
         [self setupRestkitWithCoreData];
-        [self loadCurrentUser];
+        [self requestCurrentUser];
     }
     return self;
 }
+
+#pragma mark - NSFetchedResultsControllers
 
 - (NSFetchedResultsController *)productsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate {
 
@@ -70,9 +74,10 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     frc.delegate = delegate;
     return frc;
 }
+
 - (NSFetchedResultsController *)shoppingListsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"AMOShoppingList"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"time" ascending:YES];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"time" ascending:NO];
     fetchRequest.sortDescriptors = @[descriptor];
 
     // Setup fetched results
@@ -83,23 +88,33 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     frc.delegate = delegate;
     return frc;
 }
-- (void)loginUsername:(NSString *)username password:(NSString *)password handler:(void (^)(BOOL, NSError *__autoreleasing *))handler {
-    NSString *path =[[NSString alloc] initWithFormat:@"%@?userid=%@&password=%@",kLoginPath,username,password];
-    [RKObjectManager.sharedManager getObjectsAtPath:path
-                                         parameters:nil
-                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                AMOUser *user = mappingResult.firstObject;
-                                                if (user) {
-                                                    self.currentUser = user;
-                                                    handler(YES,nil);
-                                                } else {
-                                                    handler(NO,nil);
-                                                }
-                                            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                handler(NO,&error);
-                                            }];
+
+#pragma mark - URL Paths
+
+- (NSString *)inventoryPathFromCurrentUser {
+    assert(self.currentUser);
+    return [[NSString alloc] initWithFormat:@"%@%@/%@",kBasePath,self.currentUser.email,kInventoryPath];
 }
-- (void)loadCurrentUser {
+
+- (NSString *)shoppingListsPathFromCurrentUser {
+    assert(self.currentUser);
+    return [[NSString alloc] initWithFormat:@"%@%@/%@",kBasePath,self.currentUser.email,kShoppingListsPath];
+}
+
+- (NSString *)satisfactionPathFromCurrentUser {
+    assert(self.currentUser);
+    return [[NSString alloc] initWithFormat:@"%@%@%@/%@",kRestEndpointURL,kBasePath,self.currentUser.email,kSatisfactionPath];
+
+}
+
+- (NSString *)updateShoppingListPathFromCurrentUser {
+    assert(self.currentUser);
+    return [[NSString alloc] initWithFormat:@"%@%@%@/%@update/",kRestEndpointURL,kBasePath,self.currentUser.email,kShoppingListsPath];
+}
+
+#pragma mark - Network Requests
+
+- (void)requestCurrentUser {
     // Try fetching the current user if the user exists
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"AMOUser"
                                                          inManagedObjectContext:self.managedObjectContext];
@@ -107,7 +122,35 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     [request setEntity:entityDescription];
     self.currentUser = [[self.managedObjectContext executeFetchRequest:request error:nil] firstObject];
 }
-- (void)loadInventory {
+
+- (void)requestLogin:(NSString *)username password:(NSString *)password handler:(void(^)(BOOL))handler {
+    NSString *path =[[NSString alloc] initWithFormat:@"%@?userid=%@&password=%@",kLoginPath,username,password];
+    [RKObjectManager.sharedManager getObjectsAtPath:path
+                                         parameters:nil
+                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                AMOUser *user = mappingResult.firstObject;
+                                                if (user) {
+                                                    self.currentUser = user;
+                                                    handler(YES);
+                                                } else {
+                                                    handler(NO);
+                                                }
+                                            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                handler(NO);
+                                            }];
+}
+
+- (void)requestProducts {
+    [RKObjectManager.sharedManager getObjectsAtPath:kProductsPath
+                                         parameters:nil
+                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                RKLogInfo(@"Loaded Products:%@",mappingResult.dictionary);
+                                            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                RKLogError(@"Load products failed: %@", error);
+                                            }];
+}
+
+- (void)requestInventory {
     if (!self.currentUser) {assert(0);}
 
     if (!_addedInventoryDescriptor) {
@@ -124,16 +167,8 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                                 RKLogError(@"Loading inventory failed: %@", error);
                                             }];
 }
-- (void)loadProducts {
-    [RKObjectManager.sharedManager getObjectsAtPath:kProductsPath
-                                         parameters:nil
-                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                RKLogInfo(@"Loaded Products:%@",mappingResult.dictionary);
-                                            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                RKLogError(@"Load products failed: %@", error);
-                                            }];
-}
-- (void)loadShopplingListsHandler:(void (^)(BOOL succsess, NSError **error))handler {
+
+- (void)requestListsHandler:(void (^)(BOOL))handler {
     if (!self.currentUser) {assert(0);}
 
     if (!_addedShoppingListDescriptor) {
@@ -147,40 +182,17 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                 RKLogInfo(@"Loaded Shopping Lists:%@",mappingResult.dictionary);
                                                 if(handler){
-                                                    handler(YES,nil);
+                                                    handler(YES);
                                                 }
                                             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                 RKLogError(@"Load ShoppingLists failed: %@", error);
                                                 if(handler){
-                                                    handler(NO,nil);
+                                                    handler(NO);
                                                 }
                                             }];
 }
-- (void)satisfactionRequest:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL succsess, NSError **error))handler {
 
-    NSDictionary * requestData = @{
-                                   @"product_id":product.productID,
-                                   @"approve":sat?@"true":@"false"
-                                   };
-
-    NSMutableURLRequest *request = [NSMutableURLRequest
-                                    requestWithURL:[NSURL URLWithString:self.satisfactionPathFromCurrentUser]];
-
-    NSError *error;
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPMethod:@"PUT"];
-    [request setHTTPBody:postData];
-
-
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-        NSLog(@"requestReply: %@", requestReply);
-    }] resume];
-}
-
-- (void)updateShoppingList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL succsess, NSError **error))handler {
+- (void)requestUpdateList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL))handler {
 
     NSMutableArray *productIDs = [[NSMutableArray alloc] init];
 
@@ -188,20 +200,27 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
         [productIDs addObject:product.productID];
     }
 
-    NSDictionary * requestData = @{
-                                   @"id":shoppingList.shoppingListID,
-                                   @"products":productIDs
-                                   };
+    NSDictionary * requestData = @{@"id":shoppingList.shoppingListID,
+                                   @"products":productIDs};
 
-    NSMutableURLRequest *request = [NSMutableURLRequest
-                                    requestWithURL:[NSURL URLWithString:self.updateShoppingListPathFromCurrentUser]];
+    [self requestWithData:requestData url:self.updateShoppingListPathFromCurrentUser method:@"PUT"];
+}
 
+- (void)requestSatisfaction:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL))handler {
+
+    NSDictionary * requestData = @{@"product_id":product.productID,
+                                   @"approve":sat?@"true":@"false"};
+    [self requestWithData:requestData url:self.satisfactionPathFromCurrentUser method:@"PUT"];
+}
+
+- (void)requestWithData:(NSDictionary *)requestData url:(NSString *)url method:(NSString *)method {
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     NSError *error;
     NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPMethod:@"PUT"];
+    [request setHTTPMethod:method];
     [request setHTTPBody:postData];
-
 
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -210,37 +229,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     }] resume];
 }
 
-- (NSString *)inventoryPathFromCurrentUser {
-    if(self.currentUser) {
-        return [[NSString alloc] initWithFormat:@"%@%@/%@",kBasePath,self.currentUser.email,kInventoryPath];
-    } else {
-        assert(0);
-    }
-}
-
-- (NSString *)shoppingListsPathFromCurrentUser {
-    if(self.currentUser) {
-        return [[NSString alloc] initWithFormat:@"%@%@/%@",kBasePath,self.currentUser.email,kShoppingListsPath];
-    } else {
-        assert(0);
-    }
-}
-
-- (NSString *)satisfactionPathFromCurrentUser {
-    if(self.currentUser) {
-        return [[NSString alloc] initWithFormat:@"%@%@%@/%@",kRestEndpointURL,kBasePath,self.currentUser.email,kSatisfactionPath];
-    } else {
-        assert(0);
-    }
-}
-
-- (NSString *)updateShoppingListPathFromCurrentUser {
-    if(self.currentUser) {
-        return [[NSString alloc] initWithFormat:@"%@%@%@/%@update/",kRestEndpointURL,kBasePath,self.currentUser.email,kShoppingListsPath];
-    } else {
-        assert(0);
-    }
-}
+#pragma mark - Setup and Helpers
 
 - (void)setupRestkitWithCoreData {
     RKLogConfigureByName("RestKit", RKLogLevelWarning);
@@ -301,6 +290,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     mapping.identificationAttributes = @[@"email"];
     return mapping;
 }
+
 - (RKEntityMapping *)mappingInventory {
     RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"AMOProduct" inManagedObjectStore:_managedObjectStore];
     [mapping addAttributeMappingsFromDictionary:@{@"product_id":@"productID"}];
@@ -308,6 +298,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     mapping.identificationAttributes = @[@"productID"];
     return mapping;
 }
+
 - (RKEntityMapping *)mappingProduct {
     RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"AMOProduct" inManagedObjectStore:_managedObjectStore];
     [mapping addAttributeMappingsFromDictionary:@{@"id":@"productID",
@@ -316,6 +307,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     mapping.identificationAttributes = @[@"productID"];
     return mapping;
 }
+
 - (RKEntityMapping *)mappingShoppingList {
     RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"AMOShoppingList" inManagedObjectStore:_managedObjectStore];
     [mapping addAttributeMappingsFromDictionary:@{@"id":@"shoppingListID", @"products":@"productIDs"}];
@@ -344,6 +336,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                                        keyPath:nil
                                                    statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 }
+
 - (RKResponseDescriptor *)responseDescriptorInventory:(RKEntityMapping *)mapping {
     return [RKResponseDescriptor responseDescriptorWithMapping:mapping
                                                         method:RKRequestMethodGET
@@ -351,6 +344,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                                        keyPath:nil
                                                    statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 }
+
 - (RKResponseDescriptor *)responseDescriptorProduct:(RKEntityMapping *)mapping {
     return [RKResponseDescriptor responseDescriptorWithMapping:mapping
                                                         method:RKRequestMethodGET
@@ -358,6 +352,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                                        keyPath:nil
                                                    statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 }
+
 - (RKResponseDescriptor *)responseDescriptorShoppingList:(RKEntityMapping *)mapping {
     return [RKResponseDescriptor responseDescriptorWithMapping:mapping
                                                         method:RKRequestMethodGET
@@ -485,18 +480,18 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
  category:(NSString*)category
  barcode:(int16_t)barcode
  price:(int16_t)price {
- 
+
  AMOProduct *product = [AMOProduct insertInManagedObjectContext:_managedObjectContext];
- 
+
  product.name = name;
  product.category = category;
  product.barcodeValue = barcode;
  product.priceValue = price;
- 
+
  [self saveContext];
  return product;
  }
- 
+
  - (void)saveContext {
  if (_managedObjectContext != nil) {
  NSError *error = nil;
