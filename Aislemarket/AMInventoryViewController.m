@@ -1,33 +1,33 @@
 //
-//  AMStoreViewController.m
+//  AMInventoryViewController.m
 //  Aislemarket
 //
 //  Created by Kyle Zhao on 2015-07-18.
 //  Copyright (c) 2015 Kyle Zhao. All rights reserved.
 //
 
-#import "AMStoreViewController.h"
+#import "AMInventoryViewController.h"
 #import "AMStoreSearchView.h"
 #import "AMDataManager.h"
 #import "AMOProduct.h"
 
 static NSString * const kProductCellID = @"productCell";
 
-@interface AMStoreViewController ()
+@interface AMInventoryViewController ()
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) AMStoreSearchView *searchResultsView;
 @property (nonatomic, strong) UISearchController *searchController;
 @end
 
-@implementation AMStoreViewController
+@implementation AMInventoryViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupSearchBar];
-    
+
     self.fetchedResultsController = [AMDataManager.sharedManager productsFRCForDelegate:self];
-    [AMDataManager.sharedManager loadProducts];
-    
+    [AMDataManager.sharedManager loadInventory];
+
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
         NSLog(@"Products fetchedResultsController failed %@, %@", error, [error userInfo]);
@@ -40,12 +40,12 @@ static NSString * const kProductCellID = @"productCell";
     self.searchController.searchResultsUpdater = self;
     [self.searchController.searchBar sizeToFit];
     self.tableView.tableHeaderView = self.searchController.searchBar;
-    
+
     // we want to be the delegate for our filtered table so didSelectRowAtIndexPath is called for both tables
     self.searchResultsView.tableView.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO; // default is YES
     self.searchController.searchBar.delegate = self; // so we can monitor text changes + others
-    
+
     // Search is now just presenting a view controller. As such, normal view controller
     // presentation semantics apply. Namely that presentation will walk up the view controller
     // hierarchy until it finds the root view controller or one that defines a presentation context.
@@ -61,12 +61,6 @@ static NSString * const kProductCellID = @"productCell";
 //
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    // When delegate is not nil, this view is used as the product picker.
-    // Parent view will pop this view in selectedProduct
-    if (self.delegate) {
-        [self.delegate selectedProduct:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        self.delegate = nil;
-    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -92,7 +86,7 @@ static NSString * const kProductCellID = @"productCell";
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     AMOProduct *product = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = product.capitalisedName;
-    cell.detailTextLabel.text = product.formattedPrice;
+    cell.detailTextLabel.text = product.inventory.description;
 }
 
 #pragma mark - UISearchBarDelegate
@@ -108,20 +102,20 @@ static NSString * const kProductCellID = @"productCell";
     NSString *searchText = searchController.searchBar.text;
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][0];
     NSMutableArray *searchResults = [sectionInfo.objects mutableCopy];
-    
+
     // strip out all the leading and trailing spaces
     NSString *strippedString = [searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    
+
     // break up the search terms (separated by spaces)
     NSArray *searchItems = nil;
     if (strippedString.length > 0) {
         searchItems = [strippedString componentsSeparatedByString:@" "];
     }
-    
+
     // build all the "AND" expressions for each value in the searchString
     //
     NSMutableArray *andMatchPredicates = [NSMutableArray array];
-    
+
     for (NSString *searchString in searchItems) {
         // each searchString creates an OR predicate for: name, yearIntroduced, introPrice
         //
@@ -131,10 +125,10 @@ static NSString * const kProductCellID = @"productCell";
         //      name CONTAINS[c] "2007", yearIntroduced ==[c] 2007, introPrice ==[c] 2007
         //
         NSMutableArray *searchItemsPredicate = [NSMutableArray array];
-        
+
         // Below we use NSExpression represent expressions in our predicates.
         // NSPredicate is made up of smaller, atomic parts: two NSExpressions (a left-hand value and a right-hand value)
-        
+
         // name field matching
         NSExpression *lhs = [NSExpression expressionForKeyPath:@"name"];
         NSExpression *rhs = [NSExpression expressionForConstantValue:searchString];
@@ -145,7 +139,7 @@ static NSString * const kProductCellID = @"productCell";
                                        type:NSContainsPredicateOperatorType
                                        options:NSCaseInsensitivePredicateOption];
         [searchItemsPredicate addObject:finalPredicate];
-        
+
         // yearIntroduced field matching
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
         [numberFormatter setNumberStyle:NSNumberFormatterNoStyle];
@@ -160,7 +154,7 @@ static NSString * const kProductCellID = @"productCell";
                               type:NSEqualToPredicateOperatorType
                               options:NSCaseInsensitivePredicateOption];
             [searchItemsPredicate addObject:finalPredicate];
-            
+
             // price field matching
             lhs = [NSExpression expressionForKeyPath:@"price"];
             rhs = [NSExpression expressionForConstantValue:targetNumber];
@@ -172,17 +166,17 @@ static NSString * const kProductCellID = @"productCell";
                               options:NSCaseInsensitivePredicateOption];
             [searchItemsPredicate addObject:finalPredicate];
         }
-        
+
         // at this OR predicate to our master AND predicate
         NSCompoundPredicate *orMatchPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:searchItemsPredicate];
         [andMatchPredicates addObject:orMatchPredicates];
     }
-    
+
     // match up the fields of the Product object
     NSCompoundPredicate *finalCompoundPredicate =
     [NSCompoundPredicate andPredicateWithSubpredicates:andMatchPredicates];
     searchResults = [[searchResults filteredArrayUsingPredicate:finalCompoundPredicate] mutableCopy];
-    
+
     // hand over the filtered results to our search results table
     AMStoreSearchView *tableController = (AMStoreSearchView *)self.searchController.searchResultsController;
     tableController.filteredProducts = searchResults;
@@ -201,11 +195,11 @@ static NSString * const kProductCellID = @"productCell";
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
+
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
+
         default:
             return;
     }
@@ -215,20 +209,20 @@ static NSString * const kProductCellID = @"productCell";
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
     UITableView *tableView = self.tableView;
-    
+
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
+
         case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
+
         case NSFetchedResultsChangeUpdate:
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
-            
+
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -240,3 +234,16 @@ static NSString * const kProductCellID = @"productCell";
     [self.tableView endUpdates];
 }
 @end
+
+
+//
+//id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][0];
+//NSUInteger num = [sectionInfo numberOfObjects];
+//
+//AMOProduct *product;
+//NSIndexPath *index;
+//for (NSUInteger i = 0; i<num; i++) {
+//    index = [NSIndexPath indexPathForRow:i inSection:0];
+//    product = [self.fetchedResultsController objectAtIndexPath:index];
+//    NSLog(@"Prod:%@, %@",product.productID,product.inventory);
+//}

@@ -5,17 +5,16 @@
 
 extern const struct AMOProductAttributes {
 	__unsafe_unretained NSString *category;
+	__unsafe_unretained NSString *inventory;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *price;
 	__unsafe_unretained NSString *productID;
 } AMOProductAttributes;
 
 extern const struct AMOProductRelationships {
-	__unsafe_unretained NSString *orders;
 	__unsafe_unretained NSString *shopplingLists;
 } AMOProductRelationships;
 
-@class AMOOrder;
 @class AMOShoppingList;
 
 @interface AMOProductID : NSManagedObjectID {}
@@ -30,6 +29,14 @@ extern const struct AMOProductRelationships {
 @property (nonatomic, strong) NSString* category;
 
 //- (BOOL)validateCategory:(id*)value_ error:(NSError**)error_;
+
+@property (nonatomic, strong) NSNumber* inventory;
+
+@property (atomic) int16_t inventoryValue;
+- (int16_t)inventoryValue;
+- (void)setInventoryValue:(int16_t)value_;
+
+//- (BOOL)validateInventory:(id*)value_ error:(NSError**)error_;
 
 @property (nonatomic, strong) NSString* name;
 
@@ -51,21 +58,9 @@ extern const struct AMOProductRelationships {
 
 //- (BOOL)validateProductID:(id*)value_ error:(NSError**)error_;
 
-@property (nonatomic, strong) NSSet *orders;
-
-- (NSMutableSet*)ordersSet;
-
 @property (nonatomic, strong) NSOrderedSet *shopplingLists;
 
 - (NSMutableOrderedSet*)shopplingListsSet;
-
-@end
-
-@interface _AMOProduct (OrdersCoreDataGeneratedAccessors)
-- (void)addOrders:(NSSet*)value_;
-- (void)removeOrders:(NSSet*)value_;
-- (void)addOrdersObject:(AMOOrder*)value_;
-- (void)removeOrdersObject:(AMOOrder*)value_;
 
 @end
 
@@ -89,6 +84,12 @@ extern const struct AMOProductRelationships {
 - (NSString*)primitiveCategory;
 - (void)setPrimitiveCategory:(NSString*)value;
 
+- (NSNumber*)primitiveInventory;
+- (void)setPrimitiveInventory:(NSNumber*)value;
+
+- (int16_t)primitiveInventoryValue;
+- (void)setPrimitiveInventoryValue:(int16_t)value_;
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
@@ -103,9 +104,6 @@ extern const struct AMOProductRelationships {
 
 - (int16_t)primitiveProductIDValue;
 - (void)setPrimitiveProductIDValue:(int16_t)value_;
-
-- (NSMutableSet*)primitiveOrders;
-- (void)setPrimitiveOrders:(NSMutableSet*)value;
 
 - (NSMutableOrderedSet*)primitiveShopplingLists;
 - (void)setPrimitiveShopplingLists:(NSMutableOrderedSet*)value;

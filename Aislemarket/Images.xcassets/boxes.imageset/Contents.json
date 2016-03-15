@@ -6,13 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "truck2.png"
+      "filename" : "inv 2.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "truck3.png"
+      "filename" : "inv 3.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

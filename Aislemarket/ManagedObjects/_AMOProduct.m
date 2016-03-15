@@ -5,13 +5,13 @@
 
 const struct AMOProductAttributes AMOProductAttributes = {
 	.category = @"category",
+	.inventory = @"inventory",
 	.name = @"name",
 	.price = @"price",
 	.productID = @"productID",
 };
 
 const struct AMOProductRelationships AMOProductRelationships = {
-	.orders = @"orders",
 	.shopplingLists = @"shopplingLists",
 };
 
@@ -41,6 +41,11 @@ const struct AMOProductRelationships AMOProductRelationships = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 
+	if ([key isEqualToString:@"inventoryValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"inventory"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"priceValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"price"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -56,6 +61,26 @@ const struct AMOProductRelationships AMOProductRelationships = {
 }
 
 @dynamic category;
+
+@dynamic inventory;
+
+- (int16_t)inventoryValue {
+	NSNumber *result = [self inventory];
+	return [result shortValue];
+}
+
+- (void)setInventoryValue:(int16_t)value_ {
+	[self setInventory:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveInventoryValue {
+	NSNumber *result = [self primitiveInventory];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveInventoryValue:(int16_t)value_ {
+	[self setPrimitiveInventory:[NSNumber numberWithShort:value_]];
+}
 
 @dynamic name;
 
@@ -97,17 +122,6 @@ const struct AMOProductRelationships AMOProductRelationships = {
 
 - (void)setPrimitiveProductIDValue:(int16_t)value_ {
 	[self setPrimitiveProductID:[NSNumber numberWithShort:value_]];
-}
-
-@dynamic orders;
-
-- (NSMutableSet*)ordersSet {
-	[self willAccessValueForKey:@"orders"];
-
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"orders"];
-
-	[self didAccessValueForKey:@"orders"];
-	return result;
 }
 
 @dynamic shopplingLists;

@@ -1,5 +1,5 @@
 //
-//  AMStoreViewController.h
+//  AMInventoryViewController.h
 //  Aislemarket
 //
 //  Created by Kyle Zhao on 2015-07-18.
@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "AMShoppingListDetailView.h"
-@interface AMStoreViewController : UITableViewController <
+
+@interface AMInventoryViewController : UITableViewController <
 UISearchBarDelegate,
 UISearchResultsUpdating,
 NSFetchedResultsControllerDelegate
 >
-
-@property (nonatomic, weak) AMShoppingListDetailView *delegate;
 
 @end

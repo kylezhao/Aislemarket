@@ -22,7 +22,7 @@
 - (NSFetchedResultsController *)productsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate;
 - (NSFetchedResultsController *)shoppingListsFRCForDelegate:(id<NSFetchedResultsControllerDelegate>)delegate;
 - (void)loginUsername:(NSString *)username password:(NSString *)password handler:(void (^)(BOOL succsess, NSError **error))handler;
-- (void)loadOrders;
+- (void)loadInventory;
 - (void)loadProducts;
 - (void)loadShopplingListsHandler:(void (^)(BOOL succsess, NSError **error))handler;
 - (void)satisfactionRequest:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL succsess, NSError **error))handler;

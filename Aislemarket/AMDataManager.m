@@ -16,7 +16,7 @@
 
 static NSString * const kRestEndpointURL = @"http://104.236.229.162:8080";
 static NSString * const kBasePath =        @"/simple-service-webapp/webapi/";
-static NSString * const kOrdersPath =      @"orders/";
+static NSString * const kInventoryPath =   @"inventory/";
 static NSString * const kShoppingListsPath=@"shoppinglists/";
 static NSString * const kSatisfactionPath= @"satisfaction/";
 static NSString * const kProductsPath =    @"/simple-service-webapp/webapi/products/";
@@ -33,7 +33,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
 @implementation AMDataManager {
     RKManagedObjectStore *_managedObjectStore;
     NSString *_persistantStorePath;
-    BOOL _addedOdersDescriptor;
+    BOOL _addedInventoryDescriptor;
     BOOL _addedShoppingListDescriptor;
 }
 
@@ -48,7 +48,7 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
 
 - (id)init {
     if (self = [super init]) {
-        _addedOdersDescriptor = NO;
+        _addedInventoryDescriptor = NO;
         _addedShoppingListDescriptor = NO;
         [self setupRestkitWithCoreData];
         [self loadCurrentUser];
@@ -107,21 +107,21 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     [request setEntity:entityDescription];
     self.currentUser = [[self.managedObjectContext executeFetchRequest:request error:nil] firstObject];
 }
-- (void)loadOrders {
+- (void)loadInventory {
     if (!self.currentUser) {assert(0);}
 
-    if (!_addedOdersDescriptor) {
-        RKResponseDescriptor *RDOrders = [self responseDescriptorOrder:self.mappingOrder];
-        [RKObjectManager.sharedManager addResponseDescriptor:RDOrders];
-        _addedOdersDescriptor = YES;
+    if (!_addedInventoryDescriptor) {
+        RKResponseDescriptor *RDInventory = [self responseDescriptorInventory:self.mappingInventory];
+        [RKObjectManager.sharedManager addResponseDescriptor:RDInventory];
+        _addedInventoryDescriptor = YES;
     }
 
-    [RKObjectManager.sharedManager getObjectsAtPath:self.ordersPathFromCurrentUser
+    [RKObjectManager.sharedManager getObjectsAtPath:self.inventoryPathFromCurrentUser
                                          parameters:nil
                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                RKLogInfo(@"Loaded Orders:%@",mappingResult.dictionary);
+                                                RKLogInfo(@"Loaded inventory:%@",mappingResult.dictionary);
                                             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                RKLogError(@"Loading orders failed: %@", error);
+                                                RKLogError(@"Loading inventory failed: %@", error);
                                             }];
 }
 - (void)loadProducts {
@@ -210,9 +210,9 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     }] resume];
 }
 
-- (NSString *)ordersPathFromCurrentUser {
+- (NSString *)inventoryPathFromCurrentUser {
     if(self.currentUser) {
-        return [[NSString alloc] initWithFormat:@"%@%@/%@",kBasePath,self.currentUser.email,kOrdersPath];
+        return [[NSString alloc] initWithFormat:@"%@%@/%@",kBasePath,self.currentUser.email,kInventoryPath];
     } else {
         assert(0);
     }
@@ -301,24 +301,11 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
     mapping.identificationAttributes = @[@"email"];
     return mapping;
 }
-- (RKEntityMapping *)mappingOrder {
-    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"AMOOrder" inManagedObjectStore:_managedObjectStore];
-    [mapping addAttributeMappingsFromDictionary:@{@"id":@"orderID", @"products":@"productIDs"}];
-
-    RKAttributeMapping *orderTimeMapping = [RKAttributeMapping attributeMappingFromKeyPath:@"orderTime" toKeyPath:@"orderTime"];
-    orderTimeMapping.valueTransformer = RKValueTransformer.iso8601TimestampToDateValueTransformer;
-    [mapping addPropertyMapping:orderTimeMapping];
-
-    RKAttributeMapping *deliveryTimeMapping = [RKAttributeMapping attributeMappingFromKeyPath:@"deliveryTime" toKeyPath:@"deliveryTime"];
-    deliveryTimeMapping.valueTransformer = RKValueTransformer.iso8601TimestampToDateValueTransformer;
-    [mapping addPropertyMapping:deliveryTimeMapping];
-
-    NSEntityDescription *ordersEntity = [NSEntityDescription entityForName:@"AMOOrder" inManagedObjectContext:_managedObjectContext];
-    NSRelationshipDescription *productsRelation = [ordersEntity relationshipsByName][@"products"];
-    RKConnectionDescription *connection = [[RKConnectionDescription alloc] initWithRelationship:productsRelation attributes:@{ @"productIDs": @"productID" }];
-
-    [mapping addConnection:connection];
-    mapping.identificationAttributes = @[@"orderID"];
+- (RKEntityMapping *)mappingInventory {
+    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"AMOProduct" inManagedObjectStore:_managedObjectStore];
+    [mapping addAttributeMappingsFromDictionary:@{@"product_id":@"productID"}];
+    [mapping addAttributeMappingsFromArray:@[@"inventory"]];
+    mapping.identificationAttributes = @[@"productID"];
     return mapping;
 }
 - (RKEntityMapping *)mappingProduct {
@@ -357,10 +344,10 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                                        keyPath:nil
                                                    statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 }
-- (RKResponseDescriptor *)responseDescriptorOrder:(RKEntityMapping *)mapping {
+- (RKResponseDescriptor *)responseDescriptorInventory:(RKEntityMapping *)mapping {
     return [RKResponseDescriptor responseDescriptorWithMapping:mapping
                                                         method:RKRequestMethodGET
-                                                   pathPattern:self.ordersPathFromCurrentUser
+                                                   pathPattern:self.inventoryPathFromCurrentUser
                                                        keyPath:nil
                                                    statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 }
@@ -378,8 +365,6 @@ static NSString * const kLoginPath =       @"/simple-service-webapp/webapi/users
                                                        keyPath:nil
                                                    statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
 }
-
-
 
 @end
 

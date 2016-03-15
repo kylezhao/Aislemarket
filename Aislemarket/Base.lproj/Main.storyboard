@@ -5,51 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
-        <!--Orders-->
-        <scene sceneID="wg7-f3-ORb">
-            <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="8rJ-Kc-sve" customClass="AMOrdersViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
-                        <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dI7-5O-5vq">
-                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ordersCell" id="vdX-Nb-OTY">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vdX-Nb-OTY" id="iop-PM-3BS">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="8rJ-Kc-sve" id="XsX-a1-Kda"/>
-                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="2IL-Iv-uoi"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="dI7-5O-5vq" secondAttribute="bottom" id="FET-1a-lNA"/>
-                            <constraint firstItem="dI7-5O-5vq" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="QpL-hM-RdV"/>
-                            <constraint firstItem="dI7-5O-5vq" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="p88-Ka-30v"/>
-                            <constraint firstAttribute="trailing" secondItem="dI7-5O-5vq" secondAttribute="trailing" id="vvn-cg-8al"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Orders" id="bCx-Rd-2wx"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6278" y="1574"/>
-        </scene>
         <!--Settings-->
         <scene sceneID="kjj-8c-t9C">
             <objects>
@@ -634,11 +589,11 @@
             </objects>
             <point key="canvasLocation" x="5056" y="1918"/>
         </scene>
-        <!--Orders-->
+        <!--Inventory-->
         <scene sceneID="ha3-yP-b5G">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EbS-bC-wsu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Orders" image="truck" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Inventory" image="boxes" id="cPa-gy-q4n"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="88K-tF-GDr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -646,12 +601,31 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="rootViewController" id="D7X-Fh-u2J"/>
+                        <segue destination="VyL-Fq-KD8" kind="relationship" relationship="rootViewController" id="YLa-VK-DFM"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aWi-IG-J5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5894" y="1574"/>
+        </scene>
+        <!--Inventory-->
+        <scene sceneID="b89-wQ-cxL">
+            <objects>
+                <tableViewController id="VyL-Fq-KD8" customClass="AMInventoryViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Lei-kX-EYf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="VyL-Fq-KD8" id="ySH-ph-sHT"/>
+                            <outlet property="delegate" destination="VyL-Fq-KD8" id="Krl-Y5-8ED"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Inventory" id="4HI-fW-6o5"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zck-vP-HaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6278" y="1574"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Bxf-fU-afA">
@@ -731,10 +705,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="boxes" width="25" height="25"/>
         <image name="cart" width="25" height="21"/>
         <image name="gear" width="25" height="25"/>
         <image name="list" width="25" height="25"/>
-        <image name="truck" width="25" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yfW-5X-KkV"/>

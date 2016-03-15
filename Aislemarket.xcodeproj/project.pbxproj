@@ -22,8 +22,6 @@
 
 /* Begin PBXBuildFile section */
 		A965DAFE5A327AE5E674D8D3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B7F9061908B820BB7A6CCB /* libPods.a */; };
-		C81DF3A11B644CE100DCA844 /* _AMOOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = C81DF39E1B644CE100DCA844 /* _AMOOrder.m */; };
-		C81DF3A21B644CE100DCA844 /* AMOOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = C81DF3A01B644CE100DCA844 /* AMOOrder.m */; };
 		C86E504C1C96AFC700A13CBC /* AMShoppingListDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C86E504B1C96AFC700A13CBC /* AMShoppingListDetailView.m */; };
 		C8D7A2131B614F41000CF9DE /* AMDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A2111B614F40000CF9DE /* AMDataModel.xcdatamodeld */; };
 		C8D7A2271B615931000CF9DE /* _AMOProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D7A21C1B615931000CF9DE /* _AMOProduct.m */; };
@@ -42,7 +40,7 @@
 		C8EA96541B5A472D009D1DDA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8EA96531B5A472D009D1DDA /* Images.xcassets */; };
 		C8EA96571B5A472D009D1DDA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8EA96551B5A472D009D1DDA /* LaunchScreen.xib */; };
 		C8EA96631B5A472D009D1DDA /* AislemarketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96621B5A472D009D1DDA /* AislemarketTests.m */; };
-		C8EA96711B5A93B1009D1DDA /* AMOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96701B5A93B1009D1DDA /* AMOrdersViewController.m */; };
+		C8EA96711B5A93B1009D1DDA /* AMInventoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96701B5A93B1009D1DDA /* AMInventoryViewController.m */; };
 		C8EA96741B5A93D2009D1DDA /* AMStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96731B5A93D2009D1DDA /* AMStoreViewController.m */; };
 		C8EA96771B5A93F3009D1DDA /* AMSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA96761B5A93F3009D1DDA /* AMSettingsViewController.m */; };
 /* End PBXBuildFile section */
@@ -60,10 +58,6 @@
 /* Begin PBXFileReference section */
 		4749A72CDF557C9762A4A6BE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		80B7F9061908B820BB7A6CCB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C81DF39D1B644CE100DCA844 /* _AMOOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _AMOOrder.h; sourceTree = "<group>"; };
-		C81DF39E1B644CE100DCA844 /* _AMOOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _AMOOrder.m; sourceTree = "<group>"; };
-		C81DF39F1B644CE100DCA844 /* AMOOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOOrder.h; sourceTree = "<group>"; };
-		C81DF3A01B644CE100DCA844 /* AMOOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOOrder.m; sourceTree = "<group>"; };
 		C86E504A1C96AFC700A13CBC /* AMShoppingListDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMShoppingListDetailView.h; sourceTree = "<group>"; };
 		C86E504B1C96AFC700A13CBC /* AMShoppingListDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMShoppingListDetailView.m; sourceTree = "<group>"; };
 		C8D7A2121B614F41000CF9DE /* AMDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -98,8 +92,8 @@
 		C8EA965C1B5A472D009D1DDA /* AislemarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AislemarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8EA96611B5A472D009D1DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8EA96621B5A472D009D1DDA /* AislemarketTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AislemarketTests.m; sourceTree = "<group>"; };
-		C8EA966F1B5A93B1009D1DDA /* AMOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOrdersViewController.h; sourceTree = "<group>"; };
-		C8EA96701B5A93B1009D1DDA /* AMOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOrdersViewController.m; sourceTree = "<group>"; };
+		C8EA966F1B5A93B1009D1DDA /* AMInventoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInventoryViewController.h; sourceTree = "<group>"; };
+		C8EA96701B5A93B1009D1DDA /* AMInventoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInventoryViewController.m; sourceTree = "<group>"; };
 		C8EA96721B5A93D2009D1DDA /* AMStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMStoreViewController.h; sourceTree = "<group>"; };
 		C8EA96731B5A93D2009D1DDA /* AMStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMStoreViewController.m; sourceTree = "<group>"; };
 		C8EA96751B5A93F3009D1DDA /* AMSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSettingsViewController.h; sourceTree = "<group>"; };
@@ -159,16 +153,12 @@
 			children = (
 				C8D7A2251B615931000CF9DE /* AMOUser.h */,
 				C8D7A2261B615931000CF9DE /* AMOUser.m */,
-				C81DF39F1B644CE100DCA844 /* AMOOrder.h */,
-				C81DF3A01B644CE100DCA844 /* AMOOrder.m */,
 				C8D7A2211B615931000CF9DE /* AMOProduct.h */,
 				C8D7A2221B615931000CF9DE /* AMOProduct.m */,
 				C8D7A2231B615931000CF9DE /* AMOShoppingList.h */,
 				C8D7A2241B615931000CF9DE /* AMOShoppingList.m */,
 				C8D7A21F1B615931000CF9DE /* _AMOUser.h */,
 				C8D7A2201B615931000CF9DE /* _AMOUser.m */,
-				C81DF39D1B644CE100DCA844 /* _AMOOrder.h */,
-				C81DF39E1B644CE100DCA844 /* _AMOOrder.m */,
 				C8D7A21B1B615931000CF9DE /* _AMOProduct.h */,
 				C8D7A21C1B615931000CF9DE /* _AMOProduct.m */,
 				C8D7A21D1B615931000CF9DE /* _AMOShoppingList.h */,
@@ -206,8 +196,8 @@
 				C8D9CD6E1B65516700F4D00E /* AMLoginView.h */,
 				C8D9CD6F1B65516700F4D00E /* AMLoginView.m */,
 				C886891E1C973E1000E2BDA9 /* ShoppingList */,
-				C8EA966F1B5A93B1009D1DDA /* AMOrdersViewController.h */,
-				C8EA96701B5A93B1009D1DDA /* AMOrdersViewController.m */,
+				C8EA966F1B5A93B1009D1DDA /* AMInventoryViewController.h */,
+				C8EA96701B5A93B1009D1DDA /* AMInventoryViewController.m */,
 				C8EA96751B5A93F3009D1DDA /* AMSettingsViewController.h */,
 				C8EA96761B5A93F3009D1DDA /* AMSettingsViewController.m */,
 				C8EA96721B5A93D2009D1DDA /* AMStoreViewController.h */,
@@ -432,12 +422,10 @@
 				C8D9CD731B661A8C00F4D00E /* AMShoppingListView.m in Sources */,
 				C8D7A22C1B615931000CF9DE /* AMOUser.m in Sources */,
 				C8EA96741B5A93D2009D1DDA /* AMStoreViewController.m in Sources */,
-				C81DF3A21B644CE100DCA844 /* AMOOrder.m in Sources */,
-				C8EA96711B5A93B1009D1DDA /* AMOrdersViewController.m in Sources */,
+				C8EA96711B5A93B1009D1DDA /* AMInventoryViewController.m in Sources */,
 				C8D9CD701B65516700F4D00E /* AMLoginView.m in Sources */,
 				C8D7A22F1B615B65000CF9DE /* AMDataManager.m in Sources */,
 				C8D7A2321B616796000CF9DE /* AMStoreSearchView.m in Sources */,
-				C81DF3A11B644CE100DCA844 /* _AMOOrder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

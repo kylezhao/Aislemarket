@@ -30,7 +30,6 @@ static NSString * const kProductCellID = @"productCell";
     [super viewDidLoad];
     _inSwipeMode = NO;
     self.title = self.shoppingList.name;
-    self.navigationController.navigationBar.topItem.title = @"Back";
 
     UIBarButtonItem * addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                                 target:self
