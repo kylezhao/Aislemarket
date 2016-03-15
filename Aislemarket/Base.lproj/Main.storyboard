@@ -418,7 +418,7 @@
             </objects>
             <point key="canvasLocation" x="6278" y="2365.5"/>
         </scene>
-        <!--Shopping Lists-->
+        <!--Lists-->
         <scene sceneID="l3l-s1-Qp4">
             <objects>
                 <tableViewController id="nln-TR-V5T" customClass="AMShoppingListView" sceneMemberID="viewController">
@@ -472,7 +472,7 @@
                             <outlet property="delegate" destination="nln-TR-V5T" id="boR-j0-szr"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Shopping Lists" id="LLM-Dr-4QH"/>
+                    <navigationItem key="navigationItem" title="Lists" id="LLM-Dr-4QH"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zPH-tY-ZEl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -493,6 +493,9 @@
                     </tableView>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="uar-jD-jjP" kind="show" identifier="productPickerSegue" id="yfW-5X-KkV"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l7i-tl-JW7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -537,26 +540,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hiu-8R-f8i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7126" y="2246"/>
-        </scene>
-        <!--Product Detail View-->
-        <scene sceneID="bDy-jW-6La">
-            <objects>
-                <viewController storyboardIdentifier="AMProductDetailView" id="BRE-Ku-bTR" customClass="AMProductDetailView" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="BlS-O2-Gel"/>
-                        <viewControllerLayoutGuide type="bottom" id="sgm-rV-Ux2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="3zv-xp-X3z">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bmq-6U-0fz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7513" y="2246"/>
+            <point key="canvasLocation" x="7137" y="2246"/>
         </scene>
         <!--Login-->
         <scene sceneID="W6J-xD-tZC">
@@ -752,5 +736,8 @@
         <image name="list" width="25" height="25"/>
         <image name="truck" width="25" height="16"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="yfW-5X-KkV"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

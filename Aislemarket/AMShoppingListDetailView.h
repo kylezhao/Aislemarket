@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "AMOShoppingList.h"
+@class AMOProduct;
 
 @interface AMShoppingListDetailView : UITableViewController
 
 @property (nonatomic, strong) AMOShoppingList *shoppingList;
+
+- (void)selectedProduct:(AMOProduct *)product;
 
 @end

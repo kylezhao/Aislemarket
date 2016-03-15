@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-
+#import "AMShoppingListDetailView.h"
 @interface AMStoreViewController : UITableViewController <
 UISearchBarDelegate,
 UISearchResultsUpdating,
 UISearchControllerDelegate,
 NSFetchedResultsControllerDelegate
 >
+
+@property (nonatomic, weak) AMShoppingListDetailView *delegate;
+
 @end

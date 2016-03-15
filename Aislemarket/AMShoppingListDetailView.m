@@ -14,6 +14,7 @@ alpha:1.0]
 #import "AMShoppingListDetailView.h"
 #import "AMDataManager.h"
 #import "AMOProduct.h"
+#import "AMStoreViewController.h"
 
 static NSString * const kProductCellID = @"productCell";
 
@@ -49,7 +50,6 @@ static NSString * const kProductCellID = @"productCell";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)setShoppingList:(AMOShoppingList *)shoppingList {
@@ -59,7 +59,7 @@ static NSString * const kProductCellID = @"productCell";
 }
 
 - (void)addProduct:(id)sender {
-
+    [self performSegueWithIdentifier:@"productPickerSegue" sender:self];
 }
 
 - (void)refreshProducts:(id)sender {
@@ -72,8 +72,23 @@ static NSString * const kProductCellID = @"productCell";
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated{
     [super setEditing:editing animated:animated];
     if (!editing) {
+        [AMDataManager.sharedManager.managedObjectContext save:nil];
         [AMDataManager.sharedManager updateShoppingList:self.shoppingList handler:nil];
     }
+}
+
+- (void)selectedProduct:(AMOProduct *)product {
+    [self.navigationController popViewControllerAnimated:YES];
+    NSMutableOrderedSet *products = self.shoppingList.productsSet;
+    if([products containsObject:product]){
+        return;
+    }
+    [self.tableView beginUpdates];
+    [products insertObject:product atIndex:0];
+    [AMDataManager.sharedManager.managedObjectContext save:nil];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+    [AMDataManager.sharedManager updateShoppingList:self.shoppingList handler:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -92,14 +107,13 @@ static NSString * const kProductCellID = @"productCell";
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kProductCellID];
     }
     [self configureCell:cell atIndexPath:indexPath];
-
     return cell;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     AMOProduct *product = self.shoppingList.products[indexPath.row];
     cell.textLabel.text = product.capitalisedName;
-    cell.detailTextLabel.text = product.productID.description;//product.formattedPrice;
+    cell.detailTextLabel.text = product.formattedPrice;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -172,23 +186,22 @@ static NSString * const kProductCellID = @"productCell";
 
 - (void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
     _inSwipeMode = YES;
-    NSLog(@"Will Begin %@",indexPath);
 
 }
 
 - (void)tableView:(UITableView*)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath{
     _inSwipeMode = NO;
-    NSLog(@"didend %@",indexPath);
 }
 
-/*
- #pragma mark - Navigation
+#pragma mark - Navigation
 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
+    if ([[segue identifier] isEqualToString:@"productPickerSegue"]) {
+        AMStoreViewController *controller = (AMStoreViewController *)[segue destinationViewController];
+        controller.delegate = self;
+    }
+}
 
 @end

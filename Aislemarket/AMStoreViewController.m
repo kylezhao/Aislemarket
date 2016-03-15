@@ -8,7 +8,6 @@
 
 #import <RestKit/RestKit.h>
 #import "AMStoreViewController.h"
-#import "AMProductDetailView.h"
 #import "AMStoreSearchView.h"
 #import "AMDataManager.h"
 #import "AMOProduct.h"
@@ -69,13 +68,13 @@ static NSString * const kProductCellID = @"productCell";
 // is not this UINavigationController)
 //
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    AMOProduct *selectedProduct = (tableView == self.tableView) ?
-    [self.fetchedResultsController objectAtIndexPath:indexPath] : self.searchResultsView.filteredProducts[indexPath.row];
-    
-    AMProductDetailView *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"AMProductDetailView"];
-    detailView.product = selectedProduct; // hand off the current product to the detail view controller
-    
-    [self.navigationController pushViewController:detailView animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    // When delegate is not nil, this view is used as the product picker.
+    // Parent view will pop this view in selectedProduct
+    if (self.delegate) {
+        [self.delegate selectedProduct:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        self.delegate = nil;
+    }
 }
 
 #pragma mark - UITableViewDataSource
