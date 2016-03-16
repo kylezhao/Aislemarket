@@ -75,7 +75,7 @@ static NSString * const kProductCellID = @"productCell";
     [super setEditing:editing animated:animated];
     if (!editing) {
         [[AMDataManager sharedManager] saveContext];
-        [[AMDataManager sharedManager] requestUpdateList:self.shoppingList handler:nil];
+        [[AMDataManager sharedManager] requestUpdateList:self.shoppingList newName:nil handler:nil];
     }
 }
 
@@ -90,7 +90,7 @@ static NSString * const kProductCellID = @"productCell";
     [self.shoppingList addProductsObject:product];
     [[AMDataManager sharedManager] saveContext];
     [self.tableView endUpdates];
-    [[AMDataManager sharedManager] requestUpdateList:self.shoppingList handler:nil];
+    [[AMDataManager sharedManager] requestUpdateList:self.shoppingList newName:nil handler:nil];
 }
 
 #pragma mark - UITableViewDataSource

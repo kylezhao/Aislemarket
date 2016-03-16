@@ -189,15 +189,22 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
         _addedShoppingListDescriptor = YES;
     }
 
+    NSManagedObjectContext *moc = [AMDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"AMOShoppingList"];
+    NSArray *oldDataSet = [moc executeFetchRequest:request error:nil];
+
     [RKObjectManager.sharedManager getObjectsAtPath:self.shoppingListsPathFromCurrentUser
                                          parameters:nil
-                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                RKLogInfo(@"Loaded Shopping Lists:%@",mappingResult.dictionary);
-                                                if(handler)handler(YES);
-                                            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                RKLogError(@"Load ShoppingLists failed: %@", error);
-                                                if(handler)handler(NO);
-                                            }];
+                                            success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+         RKLogInfo(@"Loaded Shopping Lists:%@",mappingResult.dictionary);
+         [self deleteStaleLists:oldDataSet newDataSet:mappingResult.dictionary];
+         if(handler)handler(YES);
+     } failure:
+     ^(RKObjectRequestOperation *operation, NSError *error) {
+         RKLogError(@"Load ShoppingLists failed: %@", error);
+         if(handler)handler(NO);
+     }];
 }
 
 - (void)requestCreateList:(NSString *)name handler:(void (^)(BOOL))handler {
@@ -206,7 +213,7 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
     [self requestWithData:requestData url:self.createShoppingListPathFromCurrentUser method:@"PUT" handler:handler];
 }
 
-- (void)requestUpdateList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL))handler {
+- (void)requestUpdateList:(AMOShoppingList *)shoppingList newName:(NSString *)newName handler:(void (^)(BOOL))handler {
 
     NSMutableArray *productIDs = [[NSMutableArray alloc] init];
 
@@ -215,9 +222,13 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
     }
 
     NSDictionary * requestData = @{@"id":shoppingList.shoppingListID,
-                                   @"products":productIDs};
+                                   @"products":productIDs,
+                                   @"name":newName?newName:shoppingList.name};
 
     [self requestWithData:requestData url:self.updateShoppingListPathFromCurrentUser method:@"PUT" handler:handler];
+}
+
+- (void)requestDeleteList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL))handler {
 }
 
 - (void)requestSatisfaction:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL))handler {
@@ -285,6 +296,27 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
     [objectManager addResponseDescriptorsFromArray:@[RDProduct, RDUser]];
 
     RKObjectManager.sharedManager = objectManager;
+}
+
+- (void)deleteStaleLists:(NSArray *)oldDataSet newDataSet:(NSDictionary *)newDataSet {
+    NSMutableSet *oldIDs = [[NSMutableSet alloc] init];
+    NSMutableSet *newIDs = [[NSMutableSet alloc] init];
+
+    for (AMOShoppingList *list in oldDataSet) {
+        [oldIDs addObject:list.shoppingListID];
+    }
+    for (AMOShoppingList *list in [newDataSet allValues].firstObject) {
+        [newIDs addObject:list.shoppingListID];
+    }
+    [oldIDs minusSet:newIDs];
+    NSManagedObjectContext *moc = [AMDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *deleteRequest = [NSFetchRequest fetchRequestWithEntityName:@"AMOShoppingList"];
+    [deleteRequest setPredicate:[NSPredicate predicateWithFormat:@"shoppingListID IN %@", oldIDs]];
+    NSArray *results = [moc executeFetchRequest:deleteRequest error:nil];
+    for (AMOShoppingList * list in results) {
+        [moc deleteObject:list];
+    }
+    [[AMDataManager sharedManager] saveContext];
 }
 
 - (void)clearCoreData {
