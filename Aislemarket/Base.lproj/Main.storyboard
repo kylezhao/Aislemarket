@@ -468,8 +468,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="2Ve-Hg-byc" kind="relationship" relationship="viewControllers" id="S7B-ag-VI4"/>
                         <segue destination="l5Z-G7-cy1" kind="relationship" relationship="viewControllers" id="9Pv-na-zJv"/>
+                        <segue destination="2Ve-Hg-byc" kind="relationship" relationship="viewControllers" id="S7B-ag-VI4"/>
                         <segue destination="EbS-bC-wsu" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                         <segue destination="yzk-pL-eNu" kind="relationship" relationship="viewControllers" id="jOT-GP-5PD"/>
                     </connections>
@@ -711,7 +711,7 @@
         <image name="list" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yfW-5X-KkV"/>
+        <segue reference="evh-VK-sno"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

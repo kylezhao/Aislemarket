@@ -46,9 +46,10 @@ static NSString * const kSettingsCellID = @"settingsCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == self.reuseIdentifiers.count - 1) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure you wish to Logout?"
-                                                                       message:nil
-                                                                preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *alert =
+        [UIAlertController alertControllerWithTitle:@"Are you sure you wish to Logout?"
+                                            message:nil
+                                     preferredStyle:UIAlertControllerStyleActionSheet];
 
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel"
                                                          style:UIAlertActionStyleCancel

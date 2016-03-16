@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Kyle Zhao. All rights reserved.
 //
 
+#import <RestKit/CoreData.h>
+#import <RestKit/RestKit.h>
 #import "AMDataManager.h"
 #import "AMOProduct.h"
 #import "AMOUser.h"
 #import "AMOShoppingList.h"
-#import <RestKit/CoreData.h>
-#import <RestKit/RestKit.h>
 
 
 static NSString * const kRestEndpointURL =   @"http://104.236.229.162:8080";

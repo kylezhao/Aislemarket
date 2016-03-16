@@ -21,6 +21,9 @@ static NSString * const kProductCellID = @"productCell";
 
 @interface AMShoppingListDetailView ()
 
+@property (nonatomic, strong) UIBarButtonItem *editButton;
+@property (nonatomic, strong) UIBarButtonItem *doneButton;
+
 @end
 
 @implementation AMShoppingListDetailView {
@@ -32,13 +35,16 @@ static NSString * const kProductCellID = @"productCell";
     _inSwipeMode = NO;
     self.title = self.shoppingList.name;
 
-    UIBarButtonItem *addButton =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+    self.doneButton =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                   target:self
-                                                  action:@selector(addProduct:)];
+                                                  action:@selector(doneEditing:)];
+    self.editButton =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                  target:self
+                                                  action:@selector(editList:)];
 
-    [self.navigationItem setRightBarButtonItems:@[self.editButtonItem, addButton]];
-
+    self.navigationItem.rightBarButtonItem = self.editButton;
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor colorWithRed:4.0f/255.0f
                                                           green:191.0f/255.0f
@@ -50,18 +56,94 @@ static NSString * const kProductCellID = @"productCell";
                   forControlEvents:UIControlEventValueChanged];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)editList:(id)sender {
+    UIAlertController * alert =
+    [UIAlertController alertControllerWithTitle:nil message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+
+    UIAlertAction* cancel =
+    [UIAlertAction actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                           handler:^(UIAlertAction * action) {
+                               [alert dismissViewControllerAnimated:YES completion:nil];
+                           }];
+
+    UIAlertAction* add =
+    [UIAlertAction actionWithTitle:@"Add"
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [alert dismissViewControllerAnimated:YES completion:nil];
+                               [self addProduct];
+                           }];
+
+    UIAlertAction* edit =
+    [UIAlertAction actionWithTitle:@"Edit"
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               self.navigationItem.rightBarButtonItem = self.doneButton;
+                               [alert dismissViewControllerAnimated:YES completion:nil];
+                               [self setEditing:YES animated:YES];
+                           }];
+
+    UIAlertAction* rename =
+    [UIAlertAction actionWithTitle:@"Rename"
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [alert dismissViewControllerAnimated:YES completion:nil];
+                               [self renameList];
+                           }];
+
+    [alert addAction:cancel];
+    [alert addAction:add];
+    [alert addAction:edit];
+    [alert addAction:rename];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)setShoppingList:(AMOShoppingList *)shoppingList {
-    if (_shoppingList != shoppingList) {
-        _shoppingList = shoppingList;
-    }
-}
-
-- (void)addProduct:(id)sender {
+- (void)addProduct {
     [self performSegueWithIdentifier:@"productPickerSegue" sender:self];
+}
+
+- (void)renameList {
+    UIAlertController *alert =
+    [UIAlertController alertControllerWithTitle:@"Rename" message:nil
+                                 preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addTextFieldWithConfigurationHandler:
+     ^(UITextField*textField){textField.placeholder = @"Name";}];
+
+    void (^alertHandler)(UIAlertAction *) = ^(UIAlertAction *action) {
+        NSString *newName = alert.textFields.firstObject.text;
+        self.title = newName;
+        self.shoppingList.name = newName;
+        AMDataManager *manager = [AMDataManager sharedManager];
+        [manager saveContext];
+        [alert dismissViewControllerAnimated:YES completion:nil];
+        [manager requestUpdateList:self.shoppingList
+                           newName:newName
+                           handler:nil];
+    };
+
+    UIAlertAction *rename =
+    [UIAlertAction actionWithTitle:@"Rename"
+                             style:UIAlertActionStyleDefault
+                           handler:alertHandler];
+
+    UIAlertAction *cancel =
+    [UIAlertAction actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                           handler:^(UIAlertAction *action){
+                               [alert dismissViewControllerAnimated:YES completion:nil];
+                           }];
+
+    [alert addAction:rename];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)doneEditing:(id)sender {
+    [self setEditing:NO animated:YES];
+    self.navigationItem.rightBarButtonItem = self.editButton;
 }
 
 - (void)refreshProducts:(id)sender {
@@ -78,7 +160,7 @@ static NSString * const kProductCellID = @"productCell";
         [[AMDataManager sharedManager] requestUpdateList:self.shoppingList newName:nil handler:nil];
     }
 }
-
+// Product Picker Callback
 - (void)selectedProduct:(AMOProduct *)product {
     [self.navigationController popViewControllerAnimated:YES];
     NSMutableOrderedSet *products = self.shoppingList.productsSet;
@@ -91,6 +173,12 @@ static NSString * const kProductCellID = @"productCell";
     [[AMDataManager sharedManager] saveContext];
     [self.tableView endUpdates];
     [[AMDataManager sharedManager] requestUpdateList:self.shoppingList newName:nil handler:nil];
+}
+
+- (void)setShoppingList:(AMOShoppingList *)shoppingList {
+    if (_shoppingList != shoppingList) {
+        _shoppingList = shoppingList;
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -201,7 +289,6 @@ static NSString * const kProductCellID = @"productCell";
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
     if ([[segue identifier] isEqualToString:@"productPickerSegue"]) {
