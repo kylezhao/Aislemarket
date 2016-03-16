@@ -106,11 +106,11 @@ static NSString * const kProductCellID = @"productCell";
 
 - (void)renameList {
     UIAlertController *alert =
-    [UIAlertController alertControllerWithTitle:@"Rename" message:nil
+    [UIAlertController alertControllerWithTitle:self.shoppingList.name message:nil
                                  preferredStyle:UIAlertControllerStyleAlert];
 
     [alert addTextFieldWithConfigurationHandler:
-     ^(UITextField*textField){textField.placeholder = @"Name";}];
+     ^(UITextField*textField){textField.placeholder=@"Name";textField.text=self.shoppingList.name;}];
 
     void (^alertHandler)(UIAlertAction *) = ^(UIAlertAction *action) {
         NSString *newName = alert.textFields.firstObject.text;
