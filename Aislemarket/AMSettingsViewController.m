@@ -30,7 +30,7 @@ static NSString * const kSettingsCellID = @"settingsCell";
                               @[@"cellAddress",@"cellCity",@"cellProvince",@"cellPostalCode",@"cellCountry"],
                               @[@"cellLogout"]];
     self.headerTitles = @[@"account settings ", @"payment information", @"delivery address"];
-    AMOUser *currentUser = AMDataManager.sharedManager.currentUser;
+    AMOUser *currentUser = [AMDataManager sharedManager].currentUser;
     self.cellContent = @[@[currentUser.name, currentUser.email, @"Change Password", currentUser.phone.stringValue],
                          @[@"Master Card", @"•••• •••• •••• 8793", @"•••",@"••/••••"],
                          @[@"200 University Avenue West", @"Waterloo", @"Ontario", @"N2L 3G1", @"Canada"]];
@@ -59,7 +59,7 @@ static NSString * const kSettingsCellID = @"settingsCell";
 
         void (^handler)(UIAlertAction * _Nonnull action) = ^(UIAlertAction * _Nonnull action) {
             [alert dismissViewControllerAnimated:YES completion:nil];
-            [AMDataManager.sharedManager clearCoreData];
+            [[AMDataManager sharedManager] clearCoreData];
             UIWindow *window = UIApplication.sharedApplication.delegate.window;
             window.rootViewController =
             [window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];

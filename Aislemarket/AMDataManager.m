@@ -106,13 +106,11 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
 - (NSString *)satisfactionPathFromCurrentUser {
     assert(self.currentUser);
     return [[NSString alloc] initWithFormat:@"%@%@%@%@",kRestEndpointURL,kBasePath,self.currentUser.email,kSatisfactionPath];
-
 }
 
 - (NSString *)createShoppingListPathFromCurrentUser {
     assert(self.currentUser);
     return [[NSString alloc] initWithFormat:@"%@%@%@%@",kRestEndpointURL,kBasePath,self.currentUser.email,kListCreatePath];
-
 }
 
 - (NSString *)updateShoppingListPathFromCurrentUser {
@@ -437,7 +435,7 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
 //    //temp
 //
 //
-//    AMDataManager * manager = AMDataManager.sharedManager;
+//    AMDataManager * manager = [AMDataManager sharedManager];
 //    [manager loginUsername:@"p8zhao@uwaterloo.ca" password:@"AMarket123"];
 //
 //

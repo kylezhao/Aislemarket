@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
-    NSString *storyboardId = AMDataManager.sharedManager.currentUser? @"tabViewController" : @"loginViewController";
+    NSString *storyboardId = [AMDataManager sharedManager].currentUser? @"tabViewController" : @"loginViewController";
     self.window.rootViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:storyboardId];
 
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:4.0f/255.0f
@@ -27,6 +27,7 @@
                                                                    blue:143.0f/255.0f
                                                                   alpha:1.0]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     return YES;
 }
 

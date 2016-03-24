@@ -22,8 +22,15 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.fetchedResultsController = [AMDataManager.sharedManager shoppingListsFRCForDelegate:self];
-    [[AMDataManager sharedManager] requestListsHandler:nil];
+    if([self didLoadProducts]) {
+        [[AMDataManager sharedManager] requestListsHandler:nil];
+    } else {
+        [[AMDataManager sharedManager] requestProductsHandler:^(BOOL succ) {
+            [[AMDataManager sharedManager] requestListsHandler:nil];
+        }];
+    }
+
+    self.fetchedResultsController = [[AMDataManager sharedManager] shoppingListsFRCForDelegate:self];
 
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {
@@ -46,6 +53,13 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
     [self.refreshControl addTarget:self
                             action:@selector(refresh:)
                   forControlEvents:UIControlEventValueChanged];
+}
+
+- (BOOL)didLoadProducts {
+    NSManagedObjectContext *moc = [AMDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"AMOProduct"];
+    NSArray *products = [moc executeFetchRequest:request error:nil];
+    return products.count > 0;
 }
 
 - (void)newList:(id)sender {

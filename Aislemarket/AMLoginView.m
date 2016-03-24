@@ -44,7 +44,7 @@
     if (indexPath.section == 1) {
         NSLog(@"Login: %@ : %@ ",self.emailField.text,self.passwordField.text);
 
-        [AMDataManager.sharedManager requestLogin:self.emailField.text
+        [[AMDataManager sharedManager] requestLogin:self.emailField.text
                                          password:self.passwordField.text
                                           handler:
          ^(BOOL succsess) {
