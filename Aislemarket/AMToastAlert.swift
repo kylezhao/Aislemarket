@@ -73,7 +73,7 @@ class AMToastAlert: NSObject, UIGestureRecognizerDelegate {
             finalOffest = toastView.frame.size.height + marginToast
         }
         super.init()
-        toastView.addGestureRecognizer(UITapGestureRecognizer(target:self, action:"tapped:"))
+        toastView.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(AMToastAlert.tapped(_:))))
     }
 
     class func showAlert(title: String?, type: AMToastType) {
