@@ -120,6 +120,11 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
     return [[NSString alloc] initWithFormat:@"%@%@%@%@",kRestEndpointURL,kBasePath,self.currentUser.email,kListUpdatePath];
 }
 
+- (NSString *)deleteShoppingListPathFromCurrentUser:(AMOShoppingList *)shoppingList {
+    assert(self.currentUser);
+    return [[NSString alloc] initWithFormat:@"%@%@%@/%@",kRestEndpointURL,kBasePath,self.currentUser.email,shoppingList.shoppingListID];
+}
+
 #pragma mark - Network Requests
 
 - (void)requestCurrentUser {
@@ -229,6 +234,7 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
 }
 
 - (void)requestDeleteList:(AMOShoppingList *)shoppingList handler:(void (^)(BOOL))handler {
+    [self requestWithData:nil url:[self deleteShoppingListPathFromCurrentUser:shoppingList] method:@"DELETE" handler:handler];
 }
 
 - (void)requestSatisfaction:(BOOL)sat product:(AMOProduct *)product handler:(void (^)(BOOL))handler {
@@ -239,14 +245,18 @@ static NSString * const kLoginPath =         @"/simple-service-webapp/webapi/use
 }
 
 - (void)requestWithData:(NSDictionary *)requestData url:(NSString *)url method:(NSString *)method
-                handler:(void (^)(BOOL))handler{
+                handler:(void (^)(BOOL))handler {
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    NSError *error;
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPMethod:method];
-    [request setHTTPBody:postData];
+
+    if (requestData) {
+        NSError *error;
+        NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+        [request setHTTPBody:postData];
+    }
 
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

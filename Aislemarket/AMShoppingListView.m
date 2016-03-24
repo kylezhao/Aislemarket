@@ -194,11 +194,14 @@ static NSString * const kShoppingListCellID = @"shoppingListCell";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 // Enable for deleting shopping lists
-//if (editingStyle == UITableViewCellEditingStyleDelete) {
-//    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-//    [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-//    [[AMDataManager sharedManager] saveContext];
-//}
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        AMDataManager *manager = [AMDataManager sharedManager];
+        AMOShoppingList *shoppingList =[self.fetchedResultsController objectAtIndexPath:indexPath];
+        [manager requestDeleteList:shoppingList handler:nil];
+        [context deleteObject:shoppingList];
+        [[AMDataManager sharedManager] saveContext];
+    }
 }
 
 #pragma mark - Segues
